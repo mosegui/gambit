@@ -1,30 +1,30 @@
 #include "listofissues.h"
 #include "ui_listofissues.h"
-//#include "tablemodel.h"
 #include <QTableView>
 #include <iostream>
 #include <QtDebug>
+
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
 {
     ui->setupUi(this);
 
-    ui->TableItem->setModel(tablemodel);
-    ui->TableItem->show();
+    dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
+    QSqlTableModel* tableModel = dbManager->getTableModel("overview");
+
+    ui->TableItem->setModel(tableModel);
     ui->TableItem->verticalHeader()->setVisible(false);
     ui->TableItem->horizontalHeader()->setStretchLastSection(true);
     ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
-
-
 }
 
 ListOfIssues::~ListOfIssues()
 {
-    delete tablemodel;
+    delete dbManager;
     delete ui;
 }
 
-
+/*
 void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
     int val = index.row();
@@ -35,3 +35,4 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
     ui->lineEdit->setText(title);
     ui->textEdit->setText(description);
 }
+*/

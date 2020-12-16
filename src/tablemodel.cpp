@@ -1,5 +1,5 @@
 #include "tablemodel.h"
-#include "database.h"
+// #include "database.h"
 
 Tablemodel::Tablemodel(QObject *parent) : QAbstractTableModel(parent)
 {
