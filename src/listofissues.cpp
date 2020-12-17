@@ -103,3 +103,15 @@ void ListOfIssues::on_lineEdit_editingFinished()
     qry.exec("UPDATE overview SET title='" + title + "' WHERE id='" + id + "'");
     tableModel->select();
 }
+
+
+void ListOfIssues::on_id_field_editingFinished()
+{
+    QString id = ui->id_field->text();
+
+    if (id != this->id)
+    {
+        QMessageBox::critical(nullptr, "Issue ID", "Once a story is created, the issue ID cannot be modified.");
+        ui->id_field->setText(this->id);
+    }
+}
