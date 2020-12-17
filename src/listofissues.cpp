@@ -3,6 +3,7 @@
 #include <QTableView>
 #include <iostream>
 #include <QtDebug>
+#include <QSqlQuery>
 
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
@@ -10,7 +11,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     ui->setupUi(this);
 
     dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
-    QSqlTableModel* tableModel = dbManager->getTableModel("overview");
+    tableModel = dbManager->getTableModel("overview");
 
     ui->TableItem->setModel(tableModel);
     ui->TableItem->verticalHeader()->setVisible(false);
@@ -24,15 +25,42 @@ ListOfIssues::~ListOfIssues()
     delete ui;
 }
 
-/*
+
+QString ListOfIssues::get_query_result(QString query)
+{
+    QSqlQuery qry;
+    QString result;
+
+    qry.prepare(query);
+
+    if (qry.exec())
+    {
+        while (qry.next())
+        {
+            result = qry.value(0).toString();
+        }
+    }
+
+    return result;
+}
+
+
 void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
-    int val = index.row();
+    QString selectedContent = tableModel->data(index).toString();
 
-    QString title = QString::fromStdString(tablemodel->issue_titles.at(val));
-    QString description = QString::fromStdString(tablemodel->issue_descriptions.at(val));
+    QString title_qry, id_qry, description_qry;
+    QString id, title, description;
+
+    id_qry = "SELECT id from overview WHERE pkey='" + selectedContent + "' OR id='" + selectedContent + "' OR title='" + selectedContent + "'";
+    id = this->get_query_result(id_qry);
+
+    title_qry = "SELECT title from overview WHERE id='" + id + "'";
+    title = this->get_query_result(title_qry);
+
+    description_qry = "SELECT description from contents WHERE id='" + id + "'";
+    description = this->get_query_result(description_qry);
 
     ui->lineEdit->setText(title);
     ui->textEdit->setText(description);
 }
-*/

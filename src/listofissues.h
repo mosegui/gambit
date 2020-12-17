@@ -15,13 +15,16 @@ class ListOfIssues : public QMainWindow
 
 public:
     DBManager* dbManager;
+    QSqlTableModel* tableModel;
 
     ListOfIssues(QWidget *parent = nullptr);
     ~ListOfIssues();
 
 private slots:
-    // void on_TableItem_clicked(const QModelIndex &index);
+    void on_TableItem_clicked(const QModelIndex &index);
 
 private:
     Ui::ListOfIssues *ui;
+
+    QString get_query_result(QString query);
 };
