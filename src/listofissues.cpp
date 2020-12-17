@@ -49,8 +49,7 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
     QString selectedContent = tableModel->data(index).toString();
 
-    QString title_qry, id_qry, description_qry;
-    QString id, title, description;
+    QString pkey_qry, title_qry, id_qry, description_qry;
 
     id_qry = "SELECT id from overview WHERE pkey='" + selectedContent + "' OR id='" + selectedContent + "' OR title='" + selectedContent + "'";
     id = this->get_query_result(id_qry);
@@ -61,7 +60,38 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
     description_qry = "SELECT description from contents WHERE id='" + id + "'";
     description = this->get_query_result(description_qry);
 
+    pkey_qry = "SELECT pkey from overview WHERE id='" + id + "'";
+    pkey = this->get_query_result(pkey_qry);
+
     ui->lineEdit->setText(title);
     ui->id_field->setText(id);
     ui->textEdit->setText(description);
+}
+
+
+void ListOfIssues::on_buttonNewIssue_clicked()
+{
+    tableModel->insertRow(tableModel->rowCount());
+}
+
+void ListOfIssues::on_buttonRemoveIssue_clicked()
+{
+    tableModel->removeRow(ui->TableItem->currentIndex().row());
+    tableModel->select();
+}
+
+
+void ListOfIssues::on_textEdit_textChanged()
+{
+    /*This is very inefficient as this function is called every single time the text is
+     * changed, causing too much traffic with the DB. It should be called only when the
+     * cursor focus goes away from the TextEdit
+     */
+
+    QSqlQuery qry;
+    QString description = ui->textEdit->toPlainText();
+
+    bool ok = qry.exec("UPDATE contents SET description='" + description + "' WHERE id='" + id + "'");
+
+    qDebug() << "UPDATE contents SET description='" + description + "' WHERE id='" + id + "'";
 }

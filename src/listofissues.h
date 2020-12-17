@@ -22,9 +22,14 @@ public:
 
 private slots:
     void on_TableItem_clicked(const QModelIndex &index);
+    void on_buttonNewIssue_clicked();
+    void on_buttonRemoveIssue_clicked();
+    void on_textEdit_textChanged();
 
 private:
     Ui::ListOfIssues *ui;
+    QString id, title, description;
+    QString pkey;
 
     QString get_query_result(QString query);
 };
