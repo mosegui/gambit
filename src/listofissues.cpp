@@ -62,5 +62,6 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
     description = this->get_query_result(description_qry);
 
     ui->lineEdit->setText(title);
+    ui->id_field->setText(id);
     ui->textEdit->setText(description);
 }
