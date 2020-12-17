@@ -4,6 +4,7 @@
 #include <iostream>
 #include <QtDebug>
 #include <QSqlQuery>
+#include <QMessageBox>
 
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
@@ -91,7 +92,14 @@ void ListOfIssues::on_textEdit_textChanged()
     QSqlQuery qry;
     QString description = ui->textEdit->toPlainText();
 
-    bool ok = qry.exec("UPDATE contents SET description='" + description + "' WHERE id='" + id + "'");
+    qry.exec("UPDATE contents SET description='" + description + "' WHERE id='" + id + "'");
+}
 
-    qDebug() << "UPDATE contents SET description='" + description + "' WHERE id='" + id + "'";
+void ListOfIssues::on_lineEdit_editingFinished()
+{
+    QSqlQuery qry;
+    QString title = ui->lineEdit->text();
+
+    qry.exec("UPDATE overview SET title='" + title + "' WHERE id='" + id + "'");
+    tableModel->select();
 }

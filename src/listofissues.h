@@ -25,6 +25,7 @@ private slots:
     void on_buttonNewIssue_clicked();
     void on_buttonRemoveIssue_clicked();
     void on_textEdit_textChanged();
+    void on_lineEdit_editingFinished();
 
 private:
     Ui::ListOfIssues *ui;
