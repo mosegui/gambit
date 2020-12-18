@@ -19,13 +19,16 @@ SOURCES += \
     dbmanager.cpp \
     main.cpp \
     listofissues.cpp \
+    newissue.cpp
 
 HEADERS += \
     dbmanager.h \
     listofissues.h \
+    newissue.h
 
 FORMS += \
-    listofissues.ui
+    listofissues.ui \
+    newissue.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

@@ -5,7 +5,8 @@
 #include <QtDebug>
 #include <QSqlQuery>
 #include <QMessageBox>
-
+#include "newissue.h"
+#include <QSqlRecord>
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
 {
@@ -72,12 +73,37 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 
 void ListOfIssues::on_buttonNewIssue_clicked()
 {
-    tableModel->insertRow(tableModel->rowCount());
+    int res;
+    newIssue newissue(this);
+    res = newissue.exec();
+
+    if (res == QDialog::Rejected)
+    {
+        tableModel->select();
+        return;
+    }
+
+    QString newIssueID = newissue.get_newIsssueID();
+    QString newIssueTitle = newissue.get_newIsssueTitle();
+
+    qDebug() << "++++++" << newIssueID << ", " << newIssueTitle;
+
+    QSqlQuery qry;
+    qry.exec("INSERT INTO overview(pkey, id, title) VALUES(" + QString::fromStdString(std::to_string(tableModel->rowCount()+1)) + ", '" + newIssueID + "', '" + newIssueTitle + "')");
+    qry.exec("INSERT INTO contents(pkey, id, description) VALUES(" + QString::fromStdString(std::to_string(tableModel->rowCount()+1)) + ", '" + newIssueID + "', 'default description...')");
+    tableModel->select();
 }
 
 void ListOfIssues::on_buttonRemoveIssue_clicked()
-{
-    tableModel->removeRow(ui->TableItem->currentIndex().row());
+{ 
+    QSqlQuery qry;
+
+    QSqlRecord currentItem = tableModel->record(ui->TableItem->currentIndex().row());
+    QString currentItemID = currentItem.value("id").toString();
+
+    qry.exec();
+    qry.exec("DELETE FROM contents WHERE id='" + currentItemID + "'");
+    qry.exec("DELETE FROM overview WHERE id='" + currentItemID + "'");
     tableModel->select();
 }
 
