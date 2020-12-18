@@ -89,8 +89,8 @@ void ListOfIssues::on_buttonNewIssue_clicked()
     qDebug() << "++++++" << newIssueID << ", " << newIssueTitle;
 
     QSqlQuery qry;
-    qry.exec("INSERT INTO overview(pkey, id, title) VALUES(" + QString::fromStdString(std::to_string(tableModel->rowCount()+1)) + ", '" + newIssueID + "', '" + newIssueTitle + "')");
-    qry.exec("INSERT INTO contents(pkey, id, description) VALUES(" + QString::fromStdString(std::to_string(tableModel->rowCount()+1)) + ", '" + newIssueID + "', 'default description...')");
+    qry.exec("INSERT INTO overview(pkey, id, title) VALUES(NULL, '" + newIssueID + "', '" + newIssueTitle + "')");
+    qry.exec("INSERT INTO contents(pkey, id, description) VALUES(NULL, '" + newIssueID + "', 'default description...')");
     tableModel->select();
 }
 
