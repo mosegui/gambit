@@ -16,6 +16,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     tableModel = dbManager->getTableModel("overview");
 
     ui->TableItem->setModel(tableModel);
+    ui->TableItem->hideColumn(0);
     ui->TableItem->verticalHeader()->setVisible(false);
     ui->TableItem->horizontalHeader()->setStretchLastSection(true);
     ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
