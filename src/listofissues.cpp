@@ -19,7 +19,14 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     ui->TableItem->hideColumn(0);
     ui->TableItem->verticalHeader()->setVisible(false);
     ui->TableItem->horizontalHeader()->setStretchLastSection(true);
+
     ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
+    /*
+    ui->TableItem->setDragEnabled(true);
+    ui->TableItem->setDropIndicatorShown(true);
+    ui->TableItem->setDragDropMode(QAbstractItemView::InternalMove);
+    ui->TableItem->setDragDropOverwriteMode(false);
+    */
 }
 
 ListOfIssues::~ListOfIssues()
