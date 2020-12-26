@@ -21,13 +21,8 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     ui->TableItem->horizontalHeader()->setStretchLastSection(true);
 
     ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
-    /*
-    ui->TableItem->setDragEnabled(true);
-    ui->TableItem->setDropIndicatorShown(true);
-    ui->TableItem->setDragDropMode(QAbstractItemView::InternalMove);
-    ui->TableItem->setDragDropOverwriteMode(false);
-    */
 }
+
 
 ListOfIssues::~ListOfIssues()
 {
@@ -131,10 +126,8 @@ void ListOfIssues::on_textEdit_textChanged()
 
 void ListOfIssues::on_lineEdit_editingFinished()
 {
-    QSqlQuery qry;
     QString title = ui->lineEdit->text();
-
-    qry.exec("UPDATE overview SET title='" + title + "' WHERE id='" + id + "'");
+    dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
     tableModel->select();
 }
 

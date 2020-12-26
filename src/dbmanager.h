@@ -14,5 +14,7 @@ class DBManager
         ~DBManager();
 
         QSqlTableModel* getTableModel(std::string);
+
+        void updateIssueTitle(std::string issueID, std::string issueTitle);
 };
 

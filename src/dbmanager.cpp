@@ -3,6 +3,7 @@
 #include <QtSql/QSqlError>
 #include <QMessageBox>
 #include <QDebug>
+#include <QSqlQuery>
 
 DBManager::DBManager(std::string hostName, std::string dbName, std::string userName, int port)
 {
@@ -18,6 +19,13 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
         QMessageBox::critical(nullptr, "Error opening the DB", mDatabase.lastError().text());
         return;
     }
+}
+
+void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
+{
+    QString querry = QString::fromStdString("UPDATE overview SET title='" + issueTitle + "' WHERE id='" + issueID + "'");
+    QSqlQuery qry(mDatabase);
+    qry.exec(querry);
 }
 
 
