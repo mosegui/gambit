@@ -22,6 +22,7 @@ class DBManager
         QString getIssueID(std::string rowContent);
         QString getIssueTitle(std::string issueID);
         QString getIssueDescription(std::string issueID);
+        std::vector<QString> getDatabases();
 
     private:
         QString get_query_result(QString query);

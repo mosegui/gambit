@@ -28,7 +28,9 @@ class ListOfIssues : public QMainWindow
         void on_lineEdit_editingFinished();
         void on_id_field_editingFinished();
 
-    private:
+        void on_actionOpen_Session_triggered();
+
+private:
         Ui::ListOfIssues *ui;
         QString id, title, description;
         QString pkey;

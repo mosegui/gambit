@@ -1,10 +1,14 @@
 #include "listofissues.h"
 #include "ui_listofissues.h"
 #include "newissue.h"
+#include "existingsessionsdialog.h"
 
 #include <iostream>
 #include <QMessageBox>
 #include <QSqlRecord>
+
+#include <QDebug>
+
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
 {
@@ -133,4 +137,19 @@ void ListOfIssues::on_id_field_editingFinished()
         QMessageBox::critical(nullptr, "Issue ID", "Once a story is created, the issue ID cannot be modified.");
         ui->id_field->setText(this->id);
     }
+}
+
+void ListOfIssues::on_actionOpen_Session_triggered()
+{
+    int res;
+    ExistingSessionsDialog existingSessions(this, dbManager);
+    existingSessions.setWindowTitle("Existing Sessions");
+    res = existingSessions.exec();
+
+    if (res == QDialog::Rejected)
+    {
+        return;
+    }
+    QString session = existingSessions.selectedSession;
+    qDebug() << "existing session selected: " << session;
 }

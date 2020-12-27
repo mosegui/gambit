@@ -137,8 +137,26 @@
      <height>22</height>
     </rect>
    </property>
+   <widget class="QMenu" name="menuFile">
+    <property name="title">
+     <string>Session</string>
+    </property>
+    <addaction name="actionNew_Session"/>
+    <addaction name="actionOpen_Session"/>
+   </widget>
+   <addaction name="menuFile"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="actionNew_Session">
+   <property name="text">
+    <string>New Session</string>
+   </property>
+  </action>
+  <action name="actionOpen_Session">
+   <property name="text">
+    <string>Open Session...</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

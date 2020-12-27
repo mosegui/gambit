@@ -4,6 +4,8 @@
 #include <QtSql/QSqlError>
 #include <QSqlQuery>
 
+#include <QDebug>
+
 /*
    The DB required for a Gambit session must have the following structure:
 
@@ -30,6 +32,7 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
     mDatabase.setDatabaseName(QString::fromStdString(dbName));
     mDatabase.setUserName(QString::fromStdString(userName));
     mDatabase.setPort(port);
+
     bool ok = mDatabase.open();
 
     if (!ok)
@@ -37,6 +40,26 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
         QMessageBox::critical(nullptr, "Error opening the DB", mDatabase.lastError().text());
         return;
     }
+}
+
+
+std::vector<QString> DBManager::getDatabases()
+{
+    QSqlQuery qry;
+    std::vector<QString> existingDbs;
+
+    QString list_qery = QString::fromStdString("SHOW DATABASES");
+    qry.prepare(list_qery);
+
+    if (qry.exec())
+    {
+        while (qry.next())
+        {
+            existingDbs.push_back(qry.value(0).toString());
+        }
+    }
+
+    return existingDbs;
 }
 
 

@@ -17,16 +17,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     dbmanager.cpp \
+    existingsessionsdialog.cpp \
     main.cpp \
     listofissues.cpp \
     newissue.cpp
 
 HEADERS += \
     dbmanager.h \
+    existingsessionsdialog.h \
     listofissues.h \
     newissue.h
 
 FORMS += \
+    existingsessionsdialog.ui \
     listofissues.ui \
     newissue.ui
 
