@@ -16,5 +16,11 @@ class DBManager
         QSqlTableModel* getTableModel(std::string);
 
         void updateIssueTitle(std::string issueID, std::string issueTitle);
+        void updateIssueDescription(std::string issueID, std::string issueDescription);
+        void createIssue(std::string issueID, std::string issueTitle);
+        void removeIssue(std::string issueID);
+        QString getIssueID(std::string rowContent);
+        QString getIssueTitle(std::string issueID);
+        QString getIssueDescription(std::string issueID);
 };
 

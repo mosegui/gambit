@@ -54,19 +54,14 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
     QString selectedContent = tableModel->data(index).toString();
 
-    QString pkey_qry, title_qry, id_qry, description_qry;
+    QString selectedRowID = dbManager->getIssueID(selectedContent.toStdString());
+    id = this->get_query_result(selectedRowID);
 
-    id_qry = "SELECT id from overview WHERE pkey='" + selectedContent + "' OR id='" + selectedContent + "' OR title='" + selectedContent + "'";
-    id = this->get_query_result(id_qry);
+    QString selectedRowTitle = dbManager->getIssueTitle(id.toStdString());
+    title = this->get_query_result(selectedRowTitle);
 
-    title_qry = "SELECT title from overview WHERE id='" + id + "'";
-    title = this->get_query_result(title_qry);
-
-    description_qry = "SELECT description from contents WHERE id='" + id + "'";
-    description = this->get_query_result(description_qry);
-
-    pkey_qry = "SELECT pkey from overview WHERE id='" + id + "'";
-    pkey = this->get_query_result(pkey_qry);
+    QString selectedRowDescription = dbManager->getIssueDescription(id.toStdString());
+    description = this->get_query_result(selectedRowDescription);
 
     ui->lineEdit->setText(title);
     ui->id_field->setText(id);
@@ -89,27 +84,26 @@ void ListOfIssues::on_buttonNewIssue_clicked()
     QString newIssueID = newissue.get_newIsssueID();
     QString newIssueTitle = newissue.get_newIsssueTitle();
 
-    qDebug() << "++++++" << newIssueID << ", " << newIssueTitle;
-
-    QSqlQuery qry;
-    qry.exec("INSERT INTO overview(pkey, id, title) VALUES(NULL, '" + newIssueID + "', '" + newIssueTitle + "')");
-    qry.exec("INSERT INTO contents(pkey, id, description) VALUES(NULL, '" + newIssueID + "', 'default description...')");
+    dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
     tableModel->select();
 }
 
 void ListOfIssues::on_buttonRemoveIssue_clicked()
 { 
-    QSqlQuery qry;
-
     QSqlRecord currentItem = tableModel->record(ui->TableItem->currentIndex().row());
-    QString currentItemID = currentItem.value("id").toString();
+    std::string currentItemID = currentItem.value("id").toString().toStdString();
 
-    qry.exec();
-    qry.exec("DELETE FROM contents WHERE id='" + currentItemID + "'");
-    qry.exec("DELETE FROM overview WHERE id='" + currentItemID + "'");
+    dbManager->removeIssue(currentItemID);
     tableModel->select();
 }
 
+
+void ListOfIssues::on_lineEdit_editingFinished()
+{
+    QString title = ui->lineEdit->text();
+    dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
+    tableModel->select();
+}
 
 void ListOfIssues::on_textEdit_textChanged()
 {
@@ -117,17 +111,8 @@ void ListOfIssues::on_textEdit_textChanged()
      * changed, causing too much traffic with the DB. It should be called only when the
      * cursor focus goes away from the TextEdit
      */
-
-    QSqlQuery qry;
     QString description = ui->textEdit->toPlainText();
-
-    qry.exec("UPDATE contents SET description='" + description + "' WHERE id='" + id + "'");
-}
-
-void ListOfIssues::on_lineEdit_editingFinished()
-{
-    QString title = ui->lineEdit->text();
-    dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
+    dbManager->updateIssueDescription(id.toStdString(), description.toStdString());
     tableModel->select();
 }
 
