@@ -31,37 +31,13 @@ ListOfIssues::~ListOfIssues()
 }
 
 
-QString ListOfIssues::get_query_result(QString query)
-{
-    QSqlQuery qry;
-    QString result;
-
-    qry.prepare(query);
-
-    if (qry.exec())
-    {
-        while (qry.next())
-        {
-            result = qry.value(0).toString();
-        }
-    }
-
-    return result;
-}
-
-
 void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
     QString selectedContent = tableModel->data(index).toString();
 
-    QString selectedRowID = dbManager->getIssueID(selectedContent.toStdString());
-    id = this->get_query_result(selectedRowID);
-
-    QString selectedRowTitle = dbManager->getIssueTitle(id.toStdString());
-    title = this->get_query_result(selectedRowTitle);
-
-    QString selectedRowDescription = dbManager->getIssueDescription(id.toStdString());
-    description = this->get_query_result(selectedRowDescription);
+    id = dbManager->getIssueID(selectedContent.toStdString());
+    title = dbManager->getIssueTitle(id.toStdString());
+    description = dbManager->getIssueDescription(id.toStdString());
 
     ui->lineEdit->setText(title);
     ui->id_field->setText(id);

@@ -1,4 +1,5 @@
 #include "dbmanager.h"
+#include "listofissues.h"
 #include <QMessageBox>
 #include <QtSql/QSqlError>
 #include <QMessageBox>
@@ -70,22 +71,44 @@ void DBManager::updateIssueDescription(std::string issueID, std::string issueDes
 
 QString DBManager::getIssueID(std::string rowContent)
 {
-    QString row_id = QString::fromStdString("SELECT id from overview WHERE pkey='" + rowContent + "' OR id='" + rowContent + "' OR title='" + rowContent + "'");
-    return row_id;
+    QString id_query = QString::fromStdString("SELECT id from overview WHERE pkey='" + rowContent + "' OR id='" + rowContent + "' OR title='" + rowContent + "'");
+    QString issue_id = this->get_query_result(id_query);
+    return issue_id;
 }
 
 
 QString DBManager::getIssueTitle(std::string issueID)
 {
-    QString issue_title = QString::fromStdString("SELECT title from overview WHERE id='" + issueID + "'");
+    QString title_query = QString::fromStdString("SELECT title from overview WHERE id='" + issueID + "'");
+    QString issue_title = this->get_query_result(title_query);
     return issue_title;
 }
 
 
 QString DBManager::getIssueDescription(std::string issueID)
 {
-    QString issue_description = QString::fromStdString("SELECT description from contents WHERE id='" + issueID + "'");
+    QString description_querry = QString::fromStdString("SELECT description from contents WHERE id='" + issueID + "'");
+    QString issue_description = this->get_query_result(description_querry);
     return issue_description;
+}
+
+
+QString DBManager::get_query_result(QString query)
+{
+    QSqlQuery qry;
+    QString result;
+
+    qry.prepare(query);
+
+    if (qry.exec())
+    {
+        while (qry.next())
+        {
+            result = qry.value(0).toString();
+        }
+    }
+
+    return result;
 }
 
 
