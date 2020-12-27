@@ -1,9 +1,7 @@
 #include "dbmanager.h"
-#include "listofissues.h"
+
 #include <QMessageBox>
 #include <QtSql/QSqlError>
-#include <QMessageBox>
-#include <QDebug>
 #include <QSqlQuery>
 
 /*

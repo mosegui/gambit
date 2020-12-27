@@ -1,11 +1,9 @@
 #include "listofissues.h"
 #include "ui_listofissues.h"
-#include <QTableView>
-#include <iostream>
-#include <QtDebug>
-#include <QSqlQuery>
-#include <QMessageBox>
 #include "newissue.h"
+
+#include <iostream>
+#include <QMessageBox>
 #include <QSqlRecord>
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
