@@ -10,6 +10,10 @@
 
 ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
 {
+    /* Configures the aspect and the behavior of the Main Window and sets up the connection
+     * with the DB via the DBManager
+    */
+
     ui->setupUi(this);
 
     dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
@@ -33,6 +37,10 @@ ListOfIssues::~ListOfIssues()
 
 void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 {
+    /* For a selected item in the QsqlTableModel it retrieves the issue
+     * id, title and description and fills in the corrsponding fields.
+    */
+
     QString selectedContent = tableModel->data(index).toString();
 
     id = dbManager->getIssueID(selectedContent.toStdString());
@@ -47,6 +55,16 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 
 void ListOfIssues::on_buttonNewIssue_clicked()
 {
+    /* Opens up a new dialog to specify the id and title of a new issue.
+     *
+     * Having the new issue be specified through a new dialog and be inserted
+     * into the DB (both tables) at once after confirmation is an easy way of
+     * not having to keep the content of the QsqTableModel and the Title and
+     * Description fields constantly synced, as well as not having to hook into
+     * the QsqTableModel db insertion method for also inserting a new record in
+     * the contents table.
+    */
+
     int res;
     newIssue newissue(this);
     res = newissue.exec();
@@ -65,7 +83,10 @@ void ListOfIssues::on_buttonNewIssue_clicked()
 }
 
 void ListOfIssues::on_buttonRemoveIssue_clicked()
-{ 
+{
+    /* Removes selected issue (records) from both tables in the DB
+    */
+
     QSqlRecord currentItem = tableModel->record(ui->TableItem->currentIndex().row());
     std::string currentItemID = currentItem.value("id").toString().toStdString();
 
@@ -76,6 +97,10 @@ void ListOfIssues::on_buttonRemoveIssue_clicked()
 
 void ListOfIssues::on_lineEdit_editingFinished()
 {
+    /* Allows for edition of the content of the issue title. Updates the "overview"
+     * table in the DB.
+    */
+
     QString title = ui->lineEdit->text();
     dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
     tableModel->select();
@@ -83,10 +108,14 @@ void ListOfIssues::on_lineEdit_editingFinished()
 
 void ListOfIssues::on_textEdit_textChanged()
 {
-    /*This is very inefficient as this function is called every single time the text is
+    /* Allows for edition of the content of the issue description. Updates the "contents"
+     * table in the DB.
+     *
+     * This is very inefficient as this function is called every single time the text is
      * changed, causing too much traffic with the DB. It should be called only when the
      * cursor focus goes away from the TextEdit
      */
+
     QString description = ui->textEdit->toPlainText();
     dbManager->updateIssueDescription(id.toStdString(), description.toStdString());
     tableModel->select();
@@ -95,6 +124,10 @@ void ListOfIssues::on_textEdit_textChanged()
 
 void ListOfIssues::on_id_field_editingFinished()
 {
+    /* Summons an error dialog if the user attempts to modify the issue ID of an already
+     * created issue.
+    */
+
     QString id = ui->id_field->text();
 
     if (id != this->id)

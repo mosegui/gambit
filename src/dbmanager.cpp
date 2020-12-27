@@ -6,6 +6,25 @@
 #include <QDebug>
 #include <QSqlQuery>
 
+/*
+   The DB required for a Gambit session must have the following structure:
+
+   Two tables "overview" and "contents"
+
+       Table: overview
+           Columns:
+               pkey: INTEGER, AUTO_INCREMENT, PRIMARY_KEY, NOT_NULL
+               id	VARCHAR(45), UNIQUE
+               title	VARCHAR(45)
+
+       Table: contents
+           Columns:
+               pkey	INTEGER, AUTO_INCREMENT, PRIMARY_KEY, NOT_NULL
+               id	VARCHAR(45), UNIQUE, FOREIGN_KEY from table overview
+               description	VARCHAR(2000)
+*/
+
+
 DBManager::DBManager(std::string hostName, std::string dbName, std::string userName, int port)
 {
     mDatabase = QSqlDatabase::addDatabase("QMYSQL");
@@ -95,6 +114,9 @@ QString DBManager::getIssueDescription(std::string issueID)
 
 QString DBManager::get_query_result(QString query)
 {
+    /* Private method actually runs the queries of the above public methods against the DB
+    */
+
     QSqlQuery qry;
     QString result;
 
