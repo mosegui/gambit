@@ -24,6 +24,7 @@ class DBManager
         QString getIssueDescription(std::string issueID);
         std::vector<QString> getDatabases();
         void connectToDb(QString DbName);
+        void createNewDB(QString dbName);
 
     private:
         QString get_query_result(QString query);

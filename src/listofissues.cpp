@@ -2,6 +2,7 @@
 #include "ui_listofissues.h"
 #include "newissue.h"
 #include "existingsessionsdialog.h"
+#include "newsessiondialog.h"
 
 #include <iostream>
 #include <QMessageBox>
@@ -17,9 +18,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     */
 
     ui->setupUi(this);
-
     dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
-    this->setUp_tableModel_from_connectedDB();
 }
 
 
@@ -155,8 +154,21 @@ void ListOfIssues::on_actionOpen_Session_triggered()
         return;
     }
     QString session = existingSessions.selectedSession;
-    qDebug() << "existing session selected: " << session;
     dbManager->connectToDb(session);
     this->setUp_tableModel_from_connectedDB();
+}
 
+void ListOfIssues::on_actionNew_Session_triggered()
+{
+    int res;
+    NewSessionDialog newSession(this, dbManager);
+    newSession.setWindowTitle("New Session");
+    res = newSession.exec();
+
+    if (res == QDialog::Rejected)
+    {
+        return;
+    }
+    QString sessionName = newSession.sessionName;
+    dbManager->createNewDB(sessionName);
 }

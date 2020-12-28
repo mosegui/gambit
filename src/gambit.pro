@@ -20,18 +20,21 @@ SOURCES += \
     existingsessionsdialog.cpp \
     main.cpp \
     listofissues.cpp \
-    newissue.cpp
+    newissue.cpp \
+    newsessiondialog.cpp
 
 HEADERS += \
     dbmanager.h \
     existingsessionsdialog.h \
     listofissues.h \
-    newissue.h
+    newissue.h \
+    newsessiondialog.h
 
 FORMS += \
     existingsessionsdialog.ui \
     listofissues.ui \
-    newissue.ui
+    newissue.ui \
+    newsessiondialog.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin

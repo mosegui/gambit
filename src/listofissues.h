@@ -30,6 +30,8 @@ class ListOfIssues : public QMainWindow
 
         void on_actionOpen_Session_triggered();
 
+        void on_actionNew_Session_triggered();
+
 private:
         void setUp_tableModel_from_connectedDB();
         Ui::ListOfIssues *ui;

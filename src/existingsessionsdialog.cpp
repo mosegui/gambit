@@ -32,8 +32,6 @@ ExistingSessionsDialog::~ExistingSessionsDialog()
 void ExistingSessionsDialog::on_buttonBox_accepted()
 {
     selectedSession = ui->listView->currentIndex().data().toString();
-    //selectedSession = selectedSession.mid(0, 3);
-
     accept();
 }
 

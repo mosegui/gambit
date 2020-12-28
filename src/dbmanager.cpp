@@ -27,9 +27,11 @@
 
 DBManager::DBManager(std::string hostName, std::string dbName, std::string userName, int port)
 {
+    /* Connects to the MySQL server
+    */
+
     mDatabase = QSqlDatabase::addDatabase("QMYSQL");
     mDatabase.setHostName(QString::fromStdString(hostName));
-    // mDatabase.setDatabaseName(QString::fromStdString(dbName));
     mDatabase.setUserName(QString::fromStdString(userName));
     mDatabase.setPort(port);
 
@@ -37,7 +39,7 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
 
     if (!ok)
     {
-        QMessageBox::critical(nullptr, "Error opening the DB", mDatabase.lastError().text());
+        QMessageBox::critical(nullptr, "Error connecting to MySQL server", mDatabase.lastError().text());
         return;
     }
 }
@@ -66,6 +68,21 @@ void DBManager::connectToDb(QString dbName)
 {
     mDatabase.setDatabaseName(dbName);
     mDatabase.open();
+}
+
+
+void DBManager::createNewDB(QString dbName)
+{
+    QString query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
+    QSqlQuery q = mDatabase.exec(query);
+
+    if (q.size() == 0){
+        mDatabase.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
+        qDebug() << mDatabase.lastError().text();
+        mDatabase.setDatabaseName(dbName);
+
+        // TODO: DB gets sucessfully created. Create tables and everything as required.
+    }
 }
 
 
