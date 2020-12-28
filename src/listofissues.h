@@ -31,6 +31,7 @@ class ListOfIssues : public QMainWindow
         void on_actionOpen_Session_triggered();
 
 private:
+        void setUp_tableModel_from_connectedDB();
         Ui::ListOfIssues *ui;
         QString id, title, description;
         QString pkey;

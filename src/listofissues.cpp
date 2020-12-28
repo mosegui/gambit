@@ -19,14 +19,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     ui->setupUi(this);
 
     dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
-    tableModel = dbManager->getTableModel("overview");
-
-    ui->TableItem->setModel(tableModel);
-    ui->TableItem->hideColumn(0);
-    ui->TableItem->verticalHeader()->setVisible(false);
-    ui->TableItem->horizontalHeader()->setStretchLastSection(true);
-
-    ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
+    this->setUp_tableModel_from_connectedDB();
 }
 
 
@@ -34,6 +27,17 @@ ListOfIssues::~ListOfIssues()
 {
     delete dbManager;
     delete ui;
+}
+
+
+void ListOfIssues::setUp_tableModel_from_connectedDB()
+{
+    tableModel = dbManager->getTableModel("overview");
+    ui->TableItem->setModel(tableModel);
+    ui->TableItem->hideColumn(0);
+    ui->TableItem->verticalHeader()->setVisible(false);
+    ui->TableItem->horizontalHeader()->setStretchLastSection(true);
+    ui->TableItem->setSelectionBehavior(QAbstractItemView::SelectRows);
 }
 
 
@@ -152,4 +156,7 @@ void ListOfIssues::on_actionOpen_Session_triggered()
     }
     QString session = existingSessions.selectedSession;
     qDebug() << "existing session selected: " << session;
+    dbManager->connectToDb(session);
+    this->setUp_tableModel_from_connectedDB();
+
 }

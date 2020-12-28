@@ -29,7 +29,7 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
 {
     mDatabase = QSqlDatabase::addDatabase("QMYSQL");
     mDatabase.setHostName(QString::fromStdString(hostName));
-    mDatabase.setDatabaseName(QString::fromStdString(dbName));
+    // mDatabase.setDatabaseName(QString::fromStdString(dbName));
     mDatabase.setUserName(QString::fromStdString(userName));
     mDatabase.setPort(port);
 
@@ -60,6 +60,12 @@ std::vector<QString> DBManager::getDatabases()
     }
 
     return existingDbs;
+}
+
+void DBManager::connectToDb(QString dbName)
+{
+    mDatabase.setDatabaseName(dbName);
+    mDatabase.open();
 }
 
 
