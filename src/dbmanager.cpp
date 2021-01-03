@@ -78,10 +78,16 @@ void DBManager::createNewDB(QString dbName)
 
     if (q.size() == 0){
         mDatabase.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
-        qDebug() << mDatabase.lastError().text();
         mDatabase.setDatabaseName(dbName);
 
-        // TODO: DB gets sucessfully created. Create tables and everything as required.
+        QString overview_table_qry = "CREATE TABLE `" + dbName + "`.`overview` (`pkey` INT NOT NULL AUTO_INCREMENT, `id` VARCHAR(45) NULL, `title` VARCHAR(45) NULL, PRIMARY KEY (`pkey`));";
+        QString contents_table_qry = "CREATE TABLE `" + dbName + "`.`contents` (`pkey` INT NOT NULL AUTO_INCREMENT, `id` VARCHAR(45) NULL, `description` VARCHAR(2000) NULL, PRIMARY KEY (`pkey`));";
+        QString foreign_key_qry = "ALTER TABLE '" + dbName + "`.`contents` ADD CONSTRAINT `fk_id` FOREIGN KEY (`id`) REFERENCES `" + dbName + "`.`overview` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;";
+
+        QSqlQuery qry(mDatabase);
+        qry.exec(overview_table_qry);
+        qry.exec(contents_table_qry);
+        qry.exec(foreign_key_qry);
     }
 }
 
