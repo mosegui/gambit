@@ -31,6 +31,11 @@ ListOfIssues::~ListOfIssues()
 
 void ListOfIssues::setUp_tableModel_from_connectedDB()
 {
+    /* Private method sets content and aspect of a the tableItem
+     * object in the main window upon connection to the selected
+     * session/DB
+    */
+
     tableModel = dbManager->getTableModel("overview");
     ui->TableItem->setModel(tableModel);
     ui->TableItem->hideColumn(0);
@@ -144,6 +149,12 @@ void ListOfIssues::on_id_field_editingFinished()
 
 void ListOfIssues::on_actionOpen_Session_triggered()
 {
+    /* Summons a dialog listing the existing sessions/DBs in the MySQL server.
+     * Upon selection of a session, it connects to it and uses the private
+     * method "setUp_tableModel_from_connectedDB" to retrieve its content from
+     * the "overview" table and fill the tableItem object.
+    */
+
     int res;
     ExistingSessionsDialog existingSessions(this, dbManager);
     existingSessions.setWindowTitle("Existing Sessions");
@@ -160,6 +171,11 @@ void ListOfIssues::on_actionOpen_Session_triggered()
 
 void ListOfIssues::on_actionNew_Session_triggered()
 {
+    /* Summons a new dialog for introducing the name of a new session.
+     * The new Session is then created by the MySQL server as a new
+     * DB/Schema.
+    */
+
     int res;
     NewSessionDialog newSession(this, dbManager);
     newSession.setWindowTitle("New Session");

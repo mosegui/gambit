@@ -47,6 +47,10 @@ DBManager::DBManager(std::string hostName, std::string dbName, std::string userN
 
 std::vector<QString> DBManager::getDatabases()
 {
+    /* Retrieves all the available databases for the MySQL server
+    *  and returns them in a vector.
+    */
+
     QSqlQuery qry;
     std::vector<QString> existingDbs;
 
@@ -73,6 +77,10 @@ void DBManager::connectToDb(QString dbName)
 
 void DBManager::createNewDB(QString dbName)
 {
+    /* Creates a new Schema/database with all the tables and keys
+    *  as needed
+    */
+
     QString query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
     QSqlQuery q = mDatabase.exec(query);
 
@@ -94,6 +102,9 @@ void DBManager::createNewDB(QString dbName)
 
 void DBManager::createIssue(std::string issueID, std::string issueTitle)
 {
+    /* Inserts a new record in both tables of the DB representing a new issue
+    */
+
     QString overview_querry = QString::fromStdString("INSERT INTO overview(pkey, id, title) VALUES(NULL, '" + issueID + "', '" + issueTitle + "')");
     QString contents_querry = QString::fromStdString("INSERT INTO contents(pkey, id, description) VALUES(NULL, '" + issueID + "', 'default description...')");
 
@@ -105,6 +116,8 @@ void DBManager::createIssue(std::string issueID, std::string issueTitle)
 
 void DBManager::removeIssue(std::string issueID)
 {
+    /* Removes a record in both tables of the DB representing a new issue
+    */
     QString contents_querry = QString::fromStdString("DELETE FROM contents WHERE id='" + issueID + "'");
     QString overview_querry = QString::fromStdString("DELETE FROM overview WHERE id='" + issueID + "'");
 
@@ -116,6 +129,10 @@ void DBManager::removeIssue(std::string issueID)
 
 QSqlTableModel* DBManager::getTableModel(std::string tableName)
 {
+    /* Casts the model of a DB table to a QSqlTableModel object
+     * and returns it.
+    */
+
     mModel = new QSqlTableModel();
     mModel->setTable(QString::fromStdString(tableName));
     mModel->select();
@@ -125,6 +142,11 @@ QSqlTableModel* DBManager::getTableModel(std::string tableName)
 
 void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
 {
+    /* Replaces the title of an existing issue/record from the
+     * "overview" table of a database. The record is located via
+     * the provided IssueID.
+    */
+
     QString querry = QString::fromStdString("UPDATE overview SET title='" + issueTitle + "' WHERE id='" + issueID + "'");
     QSqlQuery qry(mDatabase);
     qry.exec(querry);
@@ -133,6 +155,11 @@ void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
 
 void DBManager::updateIssueDescription(std::string issueID, std::string issueDescription)
 {
+    /* Replaces the description of an existing issue/record from the
+     * "contents" table of a database. The record is located via
+     * the provided IssueID.
+    */
+
     QString querry = QString::fromStdString("UPDATE contents SET description='" + issueDescription + "' WHERE id='" + issueID + "'");
     QSqlQuery qry(mDatabase);
     qry.exec(querry);
@@ -140,6 +167,10 @@ void DBManager::updateIssueDescription(std::string issueID, std::string issueDes
 
 QString DBManager::getIssueID(std::string rowContent)
 {
+    /* Retrieves the ID of an issue/record based on the content of the row
+     * selected in the QSqlTableModel object.
+    */
+
     QString id_query = QString::fromStdString("SELECT id from overview WHERE pkey='" + rowContent + "' OR id='" + rowContent + "' OR title='" + rowContent + "'");
     QString issue_id = this->get_query_result(id_query);
     return issue_id;
@@ -148,6 +179,9 @@ QString DBManager::getIssueID(std::string rowContent)
 
 QString DBManager::getIssueTitle(std::string issueID)
 {
+    /* Returns an issue title from the passed issue ID
+    */
+
     QString title_query = QString::fromStdString("SELECT title from overview WHERE id='" + issueID + "'");
     QString issue_title = this->get_query_result(title_query);
     return issue_title;
@@ -156,6 +190,9 @@ QString DBManager::getIssueTitle(std::string issueID)
 
 QString DBManager::getIssueDescription(std::string issueID)
 {
+    /* Returns an issue description from the passed issue ID
+    */
+
     QString description_querry = QString::fromStdString("SELECT description from contents WHERE id='" + issueID + "'");
     QString issue_description = this->get_query_result(description_querry);
     return issue_description;

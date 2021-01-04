@@ -9,6 +9,11 @@
 
 ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, DBManager *dbManager) : QDialog(parent), ui(new Ui::ExistingSessionsDialog)
 {
+    /* Retrieves all the existing DB names from the MySQL server and
+     * casts the DB names from a vector to a QStringList object. It then
+     * sets the list as the model of a listView object.
+    */
+
     ui->setupUi(this);
 
     QStringListModel *model = new QStringListModel();
