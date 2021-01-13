@@ -36,6 +36,25 @@ FORMS += \
     newissue.ui \
     newsessiondialog.ui
 
+
+test {
+    message(Test build)
+
+    QT += testlib
+    TARGET = qttest-example-test
+    SOURCES -= main.cpp
+
+    HEADERS += \
+        test/testdbmanager.h \
+
+    SOURCES += \
+        test/main.cpp \
+        test/testdbmanager.cpp \
+} else {
+    message(Normal build)
+}
+
+
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
