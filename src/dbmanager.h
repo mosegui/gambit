@@ -10,7 +10,7 @@ class DBManager
         QSqlTableModel* mModel;
         QSqlDatabase mDatabase;
 
-        DBManager(std::string, std::string, std::string, int);
+        DBManager(std::string, std::string, int);
         ~DBManager();
 
         QSqlTableModel* getTableModel(std::string);

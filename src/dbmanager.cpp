@@ -25,7 +25,7 @@
 */
 
 
-DBManager::DBManager(std::string hostName, std::string dbName, std::string userName, int port)
+DBManager::DBManager(std::string hostName, std::string userName, int port)
 {
     /* Connects to the MySQL server
     */

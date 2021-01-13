@@ -18,7 +18,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     */
 
     ui->setupUi(this);
-    dbManager = new DBManager("localhost", "gambit_db", "admin", 3306);
+    dbManager = new DBManager("localhost", "admin", 3306);
 }
 
 
