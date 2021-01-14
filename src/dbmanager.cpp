@@ -74,6 +74,10 @@ void DBManager::connectToDb(QString dbName)
     mDatabase.open();
 }
 
+void DBManager::closeConnection()
+{
+    mDatabase.close();
+}
 
 void DBManager::createNewDB(QString dbName)
 {
@@ -97,6 +101,15 @@ void DBManager::createNewDB(QString dbName)
         qry.exec(contents_table_qry);
         qry.exec(foreign_key_qry);
     }
+}
+
+void DBManager::deleteDB(QString dbName)
+{
+    /* Deletes a schema/database
+    */
+
+    QString query = "DROP DATABASE " + dbName;
+    mDatabase.exec(query);
 }
 
 
