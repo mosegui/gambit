@@ -1,9 +1,7 @@
 #include "newissue.h"
 #include "ui_newissue.h"
 
-newIssue::newIssue(QWidget *parent) :
-    QDialog(parent),
-    ui(new Ui::newIssue)
+newIssue::newIssue(QWidget *parent) : QDialog(parent), ui(new Ui::newIssue)
 {
     ui->setupUi(this);
 }
