@@ -36,6 +36,10 @@ FORMS += \
     newissue.ui \
     newsessiondialog.ui
 
+# Default rules for deployment.
+qnx: target.path = /tmp/$${TARGET}/bin
+else: unix:!android: target.path = /opt/$${TARGET}/bin
+!isEmpty(target.path): INSTALLS += target
 
 test {
     message(Test build)
@@ -48,14 +52,8 @@ test {
         test/testdbmanager.h \
 
     SOURCES += \
-        test/main.cpp \
-        test/testdbmanager.cpp \
+        test/test_main.cpp \
+        test/testdbmanager.cpp
 } else {
     message(Normal build)
 }
-
-
-# Default rules for deployment.
-qnx: target.path = /tmp/$${TARGET}/bin
-else: unix:!android: target.path = /opt/$${TARGET}/bin
-!isEmpty(target.path): INSTALLS += target
