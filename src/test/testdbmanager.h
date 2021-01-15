@@ -18,4 +18,5 @@ private slots:
     void cleanupTestCase();
 
     void testNewDBwasCreated();
+    void testNewIssueCreation();
 };
