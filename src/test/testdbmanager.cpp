@@ -42,7 +42,6 @@ void TestDBManager::testNewIssueCreation()
 
     QSqlQuery qry(this->dbManager->mDatabase);
     QString query = "SELECT * FROM overview";
-    QString result;
 
     qry.prepare(query);
 
