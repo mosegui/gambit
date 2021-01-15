@@ -2,6 +2,7 @@
 
 #include "dbmanager.h"
 
+
 class TestDBManager: public QObject
 {
     Q_OBJECT

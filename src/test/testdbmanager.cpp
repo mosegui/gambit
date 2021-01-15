@@ -18,20 +18,20 @@ TestDBManager::~TestDBManager()
 
 void TestDBManager::initTestCase()
 {
-    dbManager = new DBManager("localhost", "admin", 3306);
-    dbManager->createNewDB(testDbNanme);
+    this->dbManager = new DBManager("localhost", "admin", 3306, "test_connection");
+    this->dbManager->createNewDB(this->testDbNanme);
 }
 
 void TestDBManager::testNewDBwasCreated()
 {
     // Checks whether the test DB was created successfully
 
-    std::vector<QString> databases = dbManager->getDatabases();
-    QVERIFY(std::find(databases.begin(), databases.end(), testDbNanme) != databases.end());
+    std::vector<QString> databases = this->dbManager->getDatabases();
+    QVERIFY(std::find(databases.begin(), databases.end(), this->testDbNanme) != databases.end());
 }
 
 void TestDBManager::cleanupTestCase()
 {
-    dbManager->deleteDB(testDbNanme);
-    dbManager->closeConnection();
+    this->dbManager->deleteDB(this->testDbNanme);
+    this->dbManager->closeConnection();
 }
