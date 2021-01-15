@@ -112,14 +112,6 @@ void DBManager::deleteDB(QString dbName)
     */
     QString query = "DROP DATABASE " + dbName;
     this->mDatabase.exec(query);
-
-    /*
-    QString connectionName = mDatabase.connectionName();
-
-    mDatabase.close();
-    mDatabase = QSqlDatabase();
-    mDatabase.removeDatabase(connectionName);
-    */
 }
 
 
