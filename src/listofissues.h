@@ -15,7 +15,6 @@ class ListOfIssues : public QMainWindow
 
     public:
         DBManager* dbManager;
-        QSqlTableModel* tableModel;
 
         ListOfIssues(QWidget *parent = nullptr);
         ~ListOfIssues();

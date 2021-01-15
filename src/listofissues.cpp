@@ -18,13 +18,13 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     */
 
     ui->setupUi(this);
-    dbManager = new DBManager("localhost", "admin", 3306);
+    this->dbManager = new DBManager("localhost", "admin", 3306, "main_connection");
 }
 
 
 ListOfIssues::~ListOfIssues()
 {
-    delete dbManager;
+    delete this->dbManager;
     delete ui;
 }
 
@@ -36,8 +36,9 @@ void ListOfIssues::setUp_tableModel_from_connectedDB()
      * session/DB
     */
 
-    tableModel = dbManager->getTableModel("overview");
-    ui->TableItem->setModel(tableModel);
+    this->dbManager->getTableModel("overview");
+
+    ui->TableItem->setModel(this->dbManager->mModel);
     ui->TableItem->hideColumn(0);
     ui->TableItem->verticalHeader()->setVisible(false);
     ui->TableItem->horizontalHeader()->setStretchLastSection(true);
@@ -51,11 +52,11 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
      * id, title and description and fills in the corrsponding fields.
     */
 
-    QString selectedContent = tableModel->data(index).toString();
+    QString selectedContent = this->dbManager->mModel->data(index).toString();
 
-    id = dbManager->getIssueID(selectedContent.toStdString());
-    title = dbManager->getIssueTitle(id.toStdString());
-    description = dbManager->getIssueDescription(id.toStdString());
+    id = this->dbManager->getIssueID(selectedContent.toStdString());
+    title = this->dbManager->getIssueTitle(id.toStdString());
+    description = this->dbManager->getIssueDescription(id.toStdString());
 
     ui->lineEdit->setText(title);
     ui->id_field->setText(id);
@@ -81,15 +82,15 @@ void ListOfIssues::on_buttonNewIssue_clicked()
 
     if (res == QDialog::Rejected)
     {
-        tableModel->select();
+        this->dbManager->mModel->select();
         return;
     }
 
     QString newIssueID = newissue.get_newIsssueID();
     QString newIssueTitle = newissue.get_newIsssueTitle();
 
-    dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
-    tableModel->select();
+    this->dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
+    this->dbManager->mModel->select();
 }
 
 void ListOfIssues::on_buttonRemoveIssue_clicked()
@@ -97,11 +98,11 @@ void ListOfIssues::on_buttonRemoveIssue_clicked()
     /* Removes selected issue (records) from both tables in the DB
     */
 
-    QSqlRecord currentItem = tableModel->record(ui->TableItem->currentIndex().row());
+    QSqlRecord currentItem = this->dbManager->mModel->record(ui->TableItem->currentIndex().row());
     std::string currentItemID = currentItem.value("id").toString().toStdString();
 
-    dbManager->removeIssue(currentItemID);
-    tableModel->select();
+    this->dbManager->removeIssue(currentItemID);
+    this->dbManager->mModel->select();
 }
 
 
@@ -112,8 +113,8 @@ void ListOfIssues::on_lineEdit_editingFinished()
     */
 
     QString title = ui->lineEdit->text();
-    dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
-    tableModel->select();
+    this->dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
+    this->dbManager->mModel->select();
 }
 
 void ListOfIssues::on_textEdit_textChanged()
@@ -127,8 +128,8 @@ void ListOfIssues::on_textEdit_textChanged()
      */
 
     QString description = ui->textEdit->toPlainText();
-    dbManager->updateIssueDescription(id.toStdString(), description.toStdString());
-    tableModel->select();
+    this->dbManager->updateIssueDescription(id.toStdString(), description.toStdString());
+    this->dbManager->mModel->select();
 }
 
 
@@ -156,7 +157,7 @@ void ListOfIssues::on_actionOpen_Session_triggered()
     */
 
     int res;
-    ExistingSessionsDialog existingSessions(this, dbManager);
+    ExistingSessionsDialog existingSessions(this, this->dbManager);
     existingSessions.setWindowTitle("Existing Sessions");
     res = existingSessions.exec();
 
@@ -165,7 +166,7 @@ void ListOfIssues::on_actionOpen_Session_triggered()
         return;
     }
     QString session = existingSessions.selectedSession;
-    dbManager->connectToDb(session);
+    this->dbManager->connectToDb(session);
     this->setUp_tableModel_from_connectedDB();
 }
 
@@ -177,7 +178,7 @@ void ListOfIssues::on_actionNew_Session_triggered()
     */
 
     int res;
-    NewSessionDialog newSession(this, dbManager);
+    NewSessionDialog newSession(this, this->dbManager);
     newSession.setWindowTitle("New Session");
     res = newSession.exec();
 
@@ -186,5 +187,5 @@ void ListOfIssues::on_actionNew_Session_triggered()
         return;
     }
     QString sessionName = newSession.sessionName;
-    dbManager->createNewDB(sessionName);
+    this->dbManager->createNewDB(sessionName);
 }
