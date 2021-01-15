@@ -7,13 +7,15 @@
 class DBManager
 {
     public:
-        QSqlTableModel* mModel;
+        QSqlTableModel* mModel = nullptr;
         QSqlDatabase mDatabase;
 
-        DBManager(std::string, std::string, int);
+        DBManager(std::string, std::string, int, QString);
         ~DBManager();
 
         QSqlTableModel* getTableModel(std::string);
+
+        QString mainConnectionName;
 
         void updateIssueTitle(std::string issueID, std::string issueTitle);
         void updateIssueDescription(std::string issueID, std::string issueDescription);

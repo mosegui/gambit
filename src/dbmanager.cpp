@@ -3,6 +3,7 @@
 #include <QMessageBox>
 #include <QtSql/QSqlError>
 #include <QSqlQuery>
+#include <QSqlDatabase>
 
 #include <QDebug>
 
@@ -25,21 +26,22 @@
 */
 
 
-DBManager::DBManager(std::string hostName, std::string userName, int port)
+DBManager::DBManager(std::string hostName, std::string userName, int port, QString connectionName)
 {
     /* Connects to the MySQL server
     */
+    mainConnectionName = connectionName;
 
-    mDatabase = QSqlDatabase::addDatabase("QMYSQL");
-    mDatabase.setHostName(QString::fromStdString(hostName));
-    mDatabase.setUserName(QString::fromStdString(userName));
-    mDatabase.setPort(port);
+    this->mDatabase = QSqlDatabase::addDatabase("QMYSQL", connectionName);
+    this->mDatabase.setHostName(QString::fromStdString(hostName));
+    this->mDatabase.setUserName(QString::fromStdString(userName));
+    this->mDatabase.setPort(port);
 
-    bool ok = mDatabase.open();
+    bool ok = this->mDatabase.open();
 
     if (!ok)
     {
-        QMessageBox::critical(nullptr, "Error connecting to MySQL server", mDatabase.lastError().text());
+        QMessageBox::critical(nullptr, "Error connecting to MySQL engine", this->mDatabase.lastError().text());
         return;
     }
 }
@@ -51,7 +53,7 @@ std::vector<QString> DBManager::getDatabases()
     *  and returns them in a vector.
     */
 
-    QSqlQuery qry;
+    QSqlQuery qry(this->mDatabase);
     std::vector<QString> existingDbs;
 
     QString list_qery = QString::fromStdString("SHOW DATABASES");
@@ -70,13 +72,14 @@ std::vector<QString> DBManager::getDatabases()
 
 void DBManager::connectToDb(QString dbName)
 {
-    mDatabase.setDatabaseName(dbName);
-    mDatabase.open();
+    this->mDatabase.setDatabaseName(dbName);
+    this->mDatabase.open();
 }
+
 
 void DBManager::closeConnection()
 {
-    mDatabase.close();
+    this->mDatabase.close();
 }
 
 void DBManager::createNewDB(QString dbName)
@@ -86,17 +89,17 @@ void DBManager::createNewDB(QString dbName)
     */
 
     QString query = "SELECT SCHEMA_NAME FROM INFORMATION_SCHEMA.SCHEMATA WHERE SCHEMA_NAME = '" + dbName + "'";
-    QSqlQuery q = mDatabase.exec(query);
+    QSqlQuery q = this->mDatabase.exec(query);
 
     if (q.size() == 0){
-        mDatabase.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
-        mDatabase.setDatabaseName(dbName);
+        this->mDatabase.exec("CREATE DATABASE IF NOT EXISTS " + dbName + ";");
+        this->mDatabase.setDatabaseName(dbName);
 
         QString overview_table_qry = "CREATE TABLE `" + dbName + "`.`overview` (`pkey` INT NOT NULL AUTO_INCREMENT, `id` VARCHAR(45) NULL, `title` VARCHAR(45) NULL, PRIMARY KEY (`pkey`));";
         QString contents_table_qry = "CREATE TABLE `" + dbName + "`.`contents` (`pkey` INT NOT NULL AUTO_INCREMENT, `id` VARCHAR(45) NULL, `description` VARCHAR(2000) NULL, PRIMARY KEY (`pkey`));";
         QString foreign_key_qry = "ALTER TABLE '" + dbName + "`.`contents` ADD CONSTRAINT `fk_id` FOREIGN KEY (`id`) REFERENCES `" + dbName + "`.`overview` (`id`) ON DELETE NO ACTION ON UPDATE NO ACTION;";
 
-        QSqlQuery qry(mDatabase);
+        QSqlQuery qry(this->mDatabase);
         qry.exec(overview_table_qry);
         qry.exec(contents_table_qry);
         qry.exec(foreign_key_qry);
@@ -107,9 +110,16 @@ void DBManager::deleteDB(QString dbName)
 {
     /* Deletes a schema/database
     */
-
     QString query = "DROP DATABASE " + dbName;
-    mDatabase.exec(query);
+    this->mDatabase.exec(query);
+
+    /*
+    QString connectionName = mDatabase.connectionName();
+
+    mDatabase.close();
+    mDatabase = QSqlDatabase();
+    mDatabase.removeDatabase(connectionName);
+    */
 }
 
 
@@ -121,7 +131,7 @@ void DBManager::createIssue(std::string issueID, std::string issueTitle)
     QString overview_querry = QString::fromStdString("INSERT INTO overview(pkey, id, title) VALUES(NULL, '" + issueID + "', '" + issueTitle + "')");
     QString contents_querry = QString::fromStdString("INSERT INTO contents(pkey, id, description) VALUES(NULL, '" + issueID + "', 'default description...')");
 
-    QSqlQuery qry(mDatabase);
+    QSqlQuery qry(this->mDatabase);
     qry.exec(overview_querry);
     qry.exec(contents_querry);
 }
@@ -134,7 +144,7 @@ void DBManager::removeIssue(std::string issueID)
     QString contents_querry = QString::fromStdString("DELETE FROM contents WHERE id='" + issueID + "'");
     QString overview_querry = QString::fromStdString("DELETE FROM overview WHERE id='" + issueID + "'");
 
-    QSqlQuery qry(mDatabase);
+    QSqlQuery qry(this->mDatabase);
     qry.exec(contents_querry);
     qry.exec(overview_querry);
 }
@@ -146,10 +156,11 @@ QSqlTableModel* DBManager::getTableModel(std::string tableName)
      * and returns it.
     */
 
-    mModel = new QSqlTableModel();
-    mModel->setTable(QString::fromStdString(tableName));
-    mModel->select();
-    return mModel;
+    this->mModel = new QSqlTableModel(nullptr, this->mDatabase);
+    this->mModel->setTable(QString::fromStdString(tableName));
+    this->mModel->select();
+
+    return this->mModel;
 }
 
 
@@ -161,7 +172,7 @@ void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
     */
 
     QString querry = QString::fromStdString("UPDATE overview SET title='" + issueTitle + "' WHERE id='" + issueID + "'");
-    QSqlQuery qry(mDatabase);
+    QSqlQuery qry(this->mDatabase);
     qry.exec(querry);
 }
 
@@ -174,7 +185,7 @@ void DBManager::updateIssueDescription(std::string issueID, std::string issueDes
     */
 
     QString querry = QString::fromStdString("UPDATE contents SET description='" + issueDescription + "' WHERE id='" + issueID + "'");
-    QSqlQuery qry(mDatabase);
+    QSqlQuery qry(this->mDatabase);
     qry.exec(querry);
 }
 
@@ -217,7 +228,7 @@ QString DBManager::get_query_result(QString query)
     /* Private method actually runs the queries of the above public methods against the DB
     */
 
-    QSqlQuery qry;
+    QSqlQuery qry(this->mDatabase);
     QString result;
 
     qry.prepare(query);
@@ -236,7 +247,7 @@ QString DBManager::get_query_result(QString query)
 
 DBManager::~DBManager()
 {
-    delete mModel;
+    delete this->mModel;
 }
 
 

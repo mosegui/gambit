@@ -1,8 +1,6 @@
 #include "existingsessionsdialog.h"
 #include "ui_existingsessionsdialog.h"
 #include "dbmanager.h"
-#include <QStringListModel>
-#include <QStringList>
 
 #include <QDebug>
 #include <QSqlQuery>
@@ -16,8 +14,7 @@ ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, DBManager *dbMan
 
     ui->setupUi(this);
 
-    QStringListModel *model = new QStringListModel();
-    QStringList list;
+    model = new QStringListModel();
 
     std::vector<QString> dbs = dbManager->getDatabases();
     for(auto it = dbs.begin(); it != dbs.end(); ++it)
@@ -43,4 +40,25 @@ void ExistingSessionsDialog::on_buttonBox_accepted()
 void ExistingSessionsDialog::on_buttonBox_rejected()
 {
     rejected();
+}
+
+void ExistingSessionsDialog::on_pushButton_clicked()
+{
+    QString toDelete = ui->listView->currentIndex().data().toString();
+
+    QString dbDeletionConnectionName = "deletion_connection";
+    DBManager* dbDeletionManager = new DBManager("localhost", "admin", 3306, dbDeletionConnectionName);
+
+    dbDeletionManager->deleteDB(toDelete);
+    dbDeletionManager->closeConnection();
+
+    dbDeletionManager->mDatabase = QSqlDatabase();
+    dbDeletionManager->mDatabase.removeDatabase(dbDeletionConnectionName);
+
+    delete dbDeletionManager;
+
+
+    list.removeAll(toDelete);
+    model->setStringList(list);
+    ui->listView->setModel(model);
 }
