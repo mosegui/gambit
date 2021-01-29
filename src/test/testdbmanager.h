@@ -19,4 +19,7 @@ private slots:
 
     void testNewDBwasCreated();
     void testNewIssueCreation();
+    void testChangeIssueTitle();
+    void testChangeIssueDescription();
+    void testRemoveIssue();
 };
