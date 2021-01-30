@@ -22,4 +22,8 @@ private slots:
     void testChangeIssueTitle();
     void testChangeIssueDescription();
     void testRemoveIssue();
+
+private:
+    std::vector<QString> runSingleRecordQuery(QString);
+
 };
