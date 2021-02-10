@@ -50,10 +50,12 @@ test {
 
     HEADERS += \
         test/testdbmanager.h \
+        test/testlistofissues.h
 
     SOURCES += \
         test/test_main.cpp \
         test/testdbmanager.cpp
+        test/testlistofissues.cpp
 } else {
     message(Normal build)
 }
