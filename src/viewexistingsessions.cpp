@@ -1,11 +1,11 @@
-#include "existingsessionsdialog.h"
+#include "viewexistingsessions.h"
 #include "ui_existingsessionsdialog.h"
 #include "controllerdb.h"
 
 #include <QDebug>
 #include <QSqlQuery>
 
-ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::ExistingSessionsDialog)
+viewExistingSessions::viewExistingSessions(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::ExistingSessions)
 {
     /* Retrieves all the existing DB names from the MySQL server and
      * casts the DB names from a vector to a QStringList object. It then
@@ -26,23 +26,23 @@ ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, ControllerDB *db
     ui->listView->setModel(model);
 }
 
-ExistingSessionsDialog::~ExistingSessionsDialog()
+viewExistingSessions::~viewExistingSessions()
 {
     delete ui;
 }
 
-void ExistingSessionsDialog::on_buttonBox_accepted()
+void viewExistingSessions::on_buttonBox_accepted()
 {
     selectedSession = ui->listView->currentIndex().data().toString();
     accept();
 }
 
-void ExistingSessionsDialog::on_buttonBox_rejected()
+void viewExistingSessions::on_buttonBox_rejected()
 {
     rejected();
 }
 
-void ExistingSessionsDialog::on_pushButton_clicked()
+void viewExistingSessions::on_pushButton_clicked()
 {
     QString toDelete = ui->listView->currentIndex().data().toString();
 

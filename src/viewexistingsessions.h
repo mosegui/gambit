@@ -6,16 +6,16 @@
 #include <QStringListModel>
 
 namespace Ui {
-class ExistingSessionsDialog;
+class ExistingSessions;
 }
 
-class ExistingSessionsDialog : public QDialog
+class viewExistingSessions : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit ExistingSessionsDialog(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
-    ~ExistingSessionsDialog();
+    explicit viewExistingSessions(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
+    ~viewExistingSessions();
 
     QStringListModel* model;
     QStringList list;
@@ -30,6 +30,6 @@ private slots:
     void on_pushButton_clicked();
 
 private:
-    Ui::ExistingSessionsDialog *ui;
+    Ui::ExistingSessions *ui;
 };
 

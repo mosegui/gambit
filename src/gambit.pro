@@ -17,21 +17,21 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     controllerdb.cpp \
-    existingsessionsdialog.cpp \
     main.cpp \
+    viewexistingsessions.cpp \
     viewmainwindow.cpp \
     viewnewissue.cpp \
     viewnewsession.cpp
 
 HEADERS += \
     controllerdb.h \
-    existingsessionsdialog.h \
+    viewexistingsessions.h \
     viewmainwindow.h \
     viewnewissue.h \
     viewnewsession.h
 
 FORMS += \
-    existingsessionsdialog.ui \
+    existingsessions.ui \
     mainwindow.ui \
     newissue.ui \
     newsession.ui

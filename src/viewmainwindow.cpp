@@ -1,6 +1,6 @@
 #include "viewmainwindow.h"
 #include "viewnewissue.h"
-#include "existingsessionsdialog.h"
+#include "viewexistingsessions.h"
 #include "viewnewsession.h"
 
 #include <iostream>
@@ -157,7 +157,7 @@ void ViewMainWindow::on_actionOpen_Session_triggered()
     */
 
     int res;
-    ExistingSessionsDialog existingSessions(this, this->dbManager);
+    viewExistingSessions existingSessions(this, this->dbManager);
     existingSessions.setWindowTitle("Existing Sessions");
     res = existingSessions.exec();
 
