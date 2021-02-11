@@ -1,4 +1,4 @@
-#include "listofissues.h"
+#include "viewmainwindow.h"
 
 #include <QApplication>
 
@@ -6,7 +6,7 @@ int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
 
-    ListOfIssues w;
+    ViewMainWindow w;
     w.setWindowTitle("GAMBIT");
 
     w.show();

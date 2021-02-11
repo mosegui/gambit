@@ -19,20 +19,20 @@ SOURCES += \
     controllerdb.cpp \
     existingsessionsdialog.cpp \
     main.cpp \
-    listofissues.cpp \
     newissue.cpp \
-    newsessiondialog.cpp
+    newsessiondialog.cpp \
+    viewmainwindow.cpp
 
 HEADERS += \
     controllerdb.h \
     existingsessionsdialog.h \
-    listofissues.h \
     newissue.h \
-    newsessiondialog.h
+    newsessiondialog.h \
+    viewmainwindow.h
 
 FORMS += \
     existingsessionsdialog.ui \
-    listofissues.ui \
+    mainwindow.ui \
     newissue.ui \
     newsessiondialog.ui
 

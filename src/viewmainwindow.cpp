@@ -1,5 +1,4 @@
-#include "listofissues.h"
-#include "ui_listofissues.h"
+#include "viewmainwindow.h"
 #include "newissue.h"
 #include "existingsessionsdialog.h"
 #include "newsessiondialog.h"
@@ -11,7 +10,7 @@
 #include <QDebug>
 
 
-ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::ListOfIssues)
+ViewMainWindow::ViewMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWindow)
 {
     /* Configures the aspect and the behavior of the Main Window and sets up the connection
      * with the DB via the DBManager
@@ -22,7 +21,7 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
 }
 
 
-ListOfIssues::~ListOfIssues()
+ViewMainWindow::~ViewMainWindow()
 {
     delete this->dbManager;
     delete this->newissue;
@@ -30,7 +29,7 @@ ListOfIssues::~ListOfIssues()
 }
 
 
-void ListOfIssues::setUp_tableModel_from_connectedDB()
+void ViewMainWindow::setUp_tableModel_from_connectedDB()
 {
     /* Private method sets content and aspect of a the tableItem
      * object in the main window upon connection to the selected
@@ -47,7 +46,7 @@ void ListOfIssues::setUp_tableModel_from_connectedDB()
 }
 
 
-void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
+void ViewMainWindow::on_TableItem_clicked(const QModelIndex &index)
 {
     /* For a selected item in the QsqlTableModel it retrieves the issue
      * id, title and description and fills in the corrsponding fields.
@@ -65,7 +64,7 @@ void ListOfIssues::on_TableItem_clicked(const QModelIndex &index)
 }
 
 
-void ListOfIssues::on_buttonNewIssue_clicked()
+void ViewMainWindow::on_buttonNewIssue_clicked()
 {
     /* Opens up a new dialog to specify the id and title of a new issue.
      *
@@ -94,7 +93,7 @@ void ListOfIssues::on_buttonNewIssue_clicked()
     this->dbManager->mModel->select();
 }
 
-void ListOfIssues::on_buttonRemoveIssue_clicked()
+void ViewMainWindow::on_buttonRemoveIssue_clicked()
 {
     /* Removes selected issue (records) from both tables in the DB
     */
@@ -107,7 +106,7 @@ void ListOfIssues::on_buttonRemoveIssue_clicked()
 }
 
 
-void ListOfIssues::on_lineEdit_editingFinished()
+void ViewMainWindow::on_lineEdit_editingFinished()
 {
     /* Allows for edition of the content of the issue title. Updates the "overview"
      * table in the DB.
@@ -118,7 +117,7 @@ void ListOfIssues::on_lineEdit_editingFinished()
     this->dbManager->mModel->select();
 }
 
-void ListOfIssues::on_textEdit_textChanged()
+void ViewMainWindow::on_textEdit_textChanged()
 {
     /* Allows for edition of the content of the issue description. Updates the "contents"
      * table in the DB.
@@ -134,7 +133,7 @@ void ListOfIssues::on_textEdit_textChanged()
 }
 
 
-void ListOfIssues::on_id_field_editingFinished()
+void ViewMainWindow::on_id_field_editingFinished()
 {
     /* Summons an error dialog if the user attempts to modify the issue ID of an already
      * created issue.
@@ -149,7 +148,7 @@ void ListOfIssues::on_id_field_editingFinished()
     }
 }
 
-void ListOfIssues::on_actionOpen_Session_triggered()
+void ViewMainWindow::on_actionOpen_Session_triggered()
 {
     /* Summons a dialog listing the existing sessions/DBs in the MySQL server.
      * Upon selection of a session, it connects to it and uses the private
@@ -171,7 +170,7 @@ void ListOfIssues::on_actionOpen_Session_triggered()
     this->setUp_tableModel_from_connectedDB();
 }
 
-void ListOfIssues::on_actionNew_Session_triggered()
+void ViewMainWindow::on_actionNew_Session_triggered()
 {
     /* Summons a new dialog for introducing the name of a new session.
      * The new Session is then created by the MySQL server as a new

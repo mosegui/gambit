@@ -5,12 +5,13 @@
 #include <QtSql/QSqlDatabase>
 #include "controllerdb.h"
 #include "newissue.h"
+#include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
-namespace Ui { class ListOfIssues; }
+namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
 
-class ListOfIssues : public QMainWindow
+class ViewMainWindow : public QMainWindow
 {
     Q_OBJECT
 
@@ -20,8 +21,8 @@ class ListOfIssues : public QMainWindow
         ControllerDB* dbManager;
         newIssue* newissue;
 
-        ListOfIssues(QWidget *parent = nullptr);
-        ~ListOfIssues();
+        ViewMainWindow(QWidget *parent = nullptr);
+        ~ViewMainWindow();
 
     private slots:
         void on_TableItem_clicked(const QModelIndex &index);
@@ -35,7 +36,7 @@ class ListOfIssues : public QMainWindow
 
     private:
             void setUp_tableModel_from_connectedDB();
-            Ui::ListOfIssues *ui;
+            Ui::MainWindow *ui;
             QString id, title, description;
             QString pkey;
 };
