@@ -1,11 +1,11 @@
 #include "existingsessionsdialog.h"
 #include "ui_existingsessionsdialog.h"
-#include "dbmanager.h"
+#include "controllerdb.h"
 
 #include <QDebug>
 #include <QSqlQuery>
 
-ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, DBManager *dbManager) : QDialog(parent), ui(new Ui::ExistingSessionsDialog)
+ExistingSessionsDialog::ExistingSessionsDialog(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::ExistingSessionsDialog)
 {
     /* Retrieves all the existing DB names from the MySQL server and
      * casts the DB names from a vector to a QStringList object. It then
@@ -47,7 +47,7 @@ void ExistingSessionsDialog::on_pushButton_clicked()
     QString toDelete = ui->listView->currentIndex().data().toString();
 
     QString dbDeletionConnectionName = "deletion_connection";
-    DBManager* dbDeletionManager = new DBManager("localhost", "admin", 3306, dbDeletionConnectionName);
+    ControllerDB* dbDeletionManager = new ControllerDB("localhost", "admin", 3306, dbDeletionConnectionName);
 
     dbDeletionManager->deleteDB(toDelete);
     dbDeletionManager->closeConnection();

@@ -24,5 +24,6 @@ private slots:
 
 private:
     Ui::newIssue *ui;
+
 };
 

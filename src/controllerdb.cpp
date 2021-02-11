@@ -1,4 +1,4 @@
-#include "dbmanager.h"
+#include "controllerdb.h"
 
 #include <QMessageBox>
 #include <QtSql/QSqlError>
@@ -26,7 +26,7 @@
 */
 
 
-DBManager::DBManager(std::string hostName, std::string userName, int port, QString connectionName)
+ControllerDB::ControllerDB(std::string hostName, std::string userName, int port, QString connectionName)
 {
     /* Connects to the MySQL server
     */
@@ -47,7 +47,7 @@ DBManager::DBManager(std::string hostName, std::string userName, int port, QStri
 }
 
 
-std::vector<QString> DBManager::getDatabases()
+std::vector<QString> ControllerDB::getDatabases()
 {
     /* Retrieves all the available databases for the MySQL server
     *  and returns them in a vector.
@@ -70,19 +70,19 @@ std::vector<QString> DBManager::getDatabases()
     return existingDbs;
 }
 
-void DBManager::connectToDb(QString dbName)
+void ControllerDB::connectToDb(QString dbName)
 {
     this->mDatabase.setDatabaseName(dbName);
     this->mDatabase.open();
 }
 
 
-void DBManager::closeConnection()
+void ControllerDB::closeConnection()
 {
     this->mDatabase.close();
 }
 
-void DBManager::createNewDB(QString dbName)
+void ControllerDB::createNewDB(QString dbName)
 {
     /* Creates a new Schema/database with all the tables and keys
     *  as needed
@@ -106,7 +106,7 @@ void DBManager::createNewDB(QString dbName)
     }
 }
 
-void DBManager::deleteDB(QString dbName)
+void ControllerDB::deleteDB(QString dbName)
 {
     /* Deletes a schema/database
     */
@@ -115,7 +115,7 @@ void DBManager::deleteDB(QString dbName)
 }
 
 
-void DBManager::createIssue(std::string issueID, std::string issueTitle)
+void ControllerDB::createIssue(std::string issueID, std::string issueTitle)
 {
     /* Inserts a new record in both tables of the DB representing a new issue
     */
@@ -129,7 +129,7 @@ void DBManager::createIssue(std::string issueID, std::string issueTitle)
 }
 
 
-void DBManager::removeIssue(std::string issueID)
+void ControllerDB::removeIssue(std::string issueID)
 {
     /* Removes a record in both tables of the DB representing a new issue
     */
@@ -142,7 +142,7 @@ void DBManager::removeIssue(std::string issueID)
 }
 
 
-QSqlTableModel* DBManager::getTableModel(std::string tableName)
+QSqlTableModel* ControllerDB::getTableModel(std::string tableName)
 {
     /* Casts the model of a DB table to a QSqlTableModel object
      * and returns it.
@@ -156,7 +156,7 @@ QSqlTableModel* DBManager::getTableModel(std::string tableName)
 }
 
 
-void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
+void ControllerDB::updateIssueTitle(std::string issueID, std::string issueTitle)
 {
     /* Replaces the title of an existing issue/record from the
      * "overview" table of a database. The record is located via
@@ -169,7 +169,7 @@ void DBManager::updateIssueTitle(std::string issueID, std::string issueTitle)
 }
 
 
-void DBManager::updateIssueDescription(std::string issueID, std::string issueDescription)
+void ControllerDB::updateIssueDescription(std::string issueID, std::string issueDescription)
 {
     /* Replaces the description of an existing issue/record from the
      * "contents" table of a database. The record is located via
@@ -181,7 +181,7 @@ void DBManager::updateIssueDescription(std::string issueID, std::string issueDes
     qry.exec(querry);
 }
 
-QString DBManager::getIssueID(std::string rowContent)
+QString ControllerDB::getIssueID(std::string rowContent)
 {
     /* Retrieves the ID of an issue/record based on the content of the row
      * selected in the QSqlTableModel object.
@@ -193,7 +193,7 @@ QString DBManager::getIssueID(std::string rowContent)
 }
 
 
-QString DBManager::getIssueTitle(std::string issueID)
+QString ControllerDB::getIssueTitle(std::string issueID)
 {
     /* Returns an issue title from the passed issue ID
     */
@@ -204,7 +204,7 @@ QString DBManager::getIssueTitle(std::string issueID)
 }
 
 
-QString DBManager::getIssueDescription(std::string issueID)
+QString ControllerDB::getIssueDescription(std::string issueID)
 {
     /* Returns an issue description from the passed issue ID
     */
@@ -215,7 +215,7 @@ QString DBManager::getIssueDescription(std::string issueID)
 }
 
 
-QString DBManager::get_query_result(QString query)
+QString ControllerDB::get_query_result(QString query)
 {
     /* Private method actually runs the queries of the above public methods against the DB
     */
@@ -237,7 +237,7 @@ QString DBManager::get_query_result(QString query)
 }
 
 
-DBManager::~DBManager()
+ControllerDB::~ControllerDB()
 {
     delete this->mModel;
 }

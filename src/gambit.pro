@@ -16,7 +16,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
-    dbmanager.cpp \
+    controllerdb.cpp \
     existingsessionsdialog.cpp \
     main.cpp \
     listofissues.cpp \
@@ -24,7 +24,7 @@ SOURCES += \
     newsessiondialog.cpp
 
 HEADERS += \
-    dbmanager.h \
+    controllerdb.h \
     existingsessionsdialog.h \
     listofissues.h \
     newissue.h \
@@ -49,13 +49,12 @@ test {
     SOURCES -= main.cpp
 
     HEADERS += \
-        test/testdbmanager.h \
-        test/testlistofissues.h
+        test/testdbmanager.h
 
     SOURCES += \
         test/test_main.cpp \
         test/testdbmanager.cpp
-        test/testlistofissues.cpp
+
 } else {
     message(Normal build)
 }

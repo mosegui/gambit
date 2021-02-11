@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dbmanager.h"
+#include "controllerdb.h"
 #include <QDialog>
 #include <QStringList>
 #include <QStringListModel>
@@ -14,7 +14,7 @@ class ExistingSessionsDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit ExistingSessionsDialog(QWidget *parent = nullptr, DBManager *dbManager = nullptr);
+    explicit ExistingSessionsDialog(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
     ~ExistingSessionsDialog();
 
     QStringListModel* model;

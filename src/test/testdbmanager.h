@@ -1,6 +1,6 @@
 #include <QtTest/QtTest>
 
-#include "dbmanager.h"
+#include "controllerdb.h"
 
 
 class TestDBManager: public QObject
@@ -10,7 +10,7 @@ class TestDBManager: public QObject
 public:
     QString testDbNanme = "test_db";
 
-    DBManager* dbManager;
+    ControllerDB* dbManager;
     ~TestDBManager();
 
 private slots:

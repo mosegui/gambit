@@ -4,14 +4,14 @@
 #include <QtSql/QSqlDatabase>
 
 
-class DBManager
+class ControllerDB
 {
     public:
         QSqlTableModel* mModel = nullptr;
         QSqlDatabase mDatabase;
 
-        DBManager(std::string, std::string, int, QString);
-        ~DBManager();
+        ControllerDB(std::string, std::string, int, QString);
+        ~ControllerDB();
 
         QSqlTableModel* getTableModel(std::string);
 

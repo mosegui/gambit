@@ -9,7 +9,7 @@ TestDBManager::~TestDBManager()
 
 void TestDBManager::initTestCase()
 {
-    this->dbManager = new DBManager("localhost", "admin", 3306, "test_connection");
+    this->dbManager = new ControllerDB("localhost", "admin", 3306, "test_connection");
     this->dbManager->createNewDB(this->testDbNanme);
     this->dbManager->connectToDb(this->testDbNanme);
 }

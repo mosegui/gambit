@@ -18,13 +18,14 @@ ListOfIssues::ListOfIssues(QWidget *parent) : QMainWindow(parent), ui(new Ui::Li
     */
 
     ui->setupUi(this);
-    this->dbManager = new DBManager("localhost", "admin", 3306, "main_connection");
+    this->dbManager = new ControllerDB("localhost", "admin", 3306, "main_connection");
 }
 
 
 ListOfIssues::~ListOfIssues()
 {
     delete this->dbManager;
+    delete this->newissue;
     delete ui;
 }
 
@@ -77,17 +78,17 @@ void ListOfIssues::on_buttonNewIssue_clicked()
     */
 
     int res;
-    newIssue newissue(this);
-    res = newissue.exec();
+    this->newissue = new newIssue(this);
+    res = newissue->exec();
 
     if (res == QDialog::Rejected)
     {
-        this->dbManager->mModel->select();
+        this->dbManager->mModel->select();  // refreshes table model
         return;
     }
 
-    QString newIssueID = newissue.get_newIsssueID();
-    QString newIssueTitle = newissue.get_newIsssueTitle();
+    QString newIssueID = newissue->get_newIsssueID();
+    QString newIssueTitle = newissue->get_newIsssueTitle();
 
     this->dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
     this->dbManager->mModel->select();

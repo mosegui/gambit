@@ -1,6 +1,6 @@
 #pragma once
 
-#include "dbmanager.h"
+#include "controllerdb.h"
 #include <QDialog>
 
 namespace Ui {
@@ -13,7 +13,7 @@ class NewSessionDialog : public QDialog
     Q_OBJECT
 
 public:
-    explicit NewSessionDialog(QWidget *parent = nullptr, DBManager *dbManager = nullptr);
+    explicit NewSessionDialog(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
     // I include the DBManager in the signature bc in the future I will want to check agains the DB if the name of the new session already exists
 
     ~NewSessionDialog();
