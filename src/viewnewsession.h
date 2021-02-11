@@ -1,22 +1,23 @@
 #pragma once
 
 #include "controllerdb.h"
+#include "ui_newsession.h"
 #include <QDialog>
 
 namespace Ui {
-class NewSessionDialog;
+class NewSession;
 }
 
 
-class NewSessionDialog : public QDialog
+class ViewNewSession : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit NewSessionDialog(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
+    explicit ViewNewSession(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
     // I include the DBManager in the signature bc in the future I will want to check agains the DB if the name of the new session already exists
 
-    ~NewSessionDialog();
+    ~ViewNewSession();
     QString sessionName;
 
 private slots:
@@ -24,5 +25,5 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
-    Ui::NewSessionDialog *ui;
+    Ui::NewSession *ui;
 };

@@ -1,7 +1,7 @@
 #include "viewmainwindow.h"
 #include "newissue.h"
 #include "existingsessionsdialog.h"
-#include "newsessiondialog.h"
+#include "viewnewsession.h"
 
 #include <iostream>
 #include <QMessageBox>
@@ -178,7 +178,7 @@ void ViewMainWindow::on_actionNew_Session_triggered()
     */
 
     int res;
-    NewSessionDialog newSession(this, this->dbManager);
+    ViewNewSession newSession(this, this->dbManager);
     newSession.setWindowTitle("New Session");
     res = newSession.exec();
 

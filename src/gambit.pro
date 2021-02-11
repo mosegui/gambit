@@ -20,21 +20,21 @@ SOURCES += \
     existingsessionsdialog.cpp \
     main.cpp \
     newissue.cpp \
-    newsessiondialog.cpp \
-    viewmainwindow.cpp
+    viewmainwindow.cpp \
+    viewnewsession.cpp
 
 HEADERS += \
     controllerdb.h \
     existingsessionsdialog.h \
     newissue.h \
-    newsessiondialog.h \
-    viewmainwindow.h
+    viewmainwindow.h \
+    viewnewsession.h
 
 FORMS += \
     existingsessionsdialog.ui \
     mainwindow.ui \
     newissue.ui \
-    newsessiondialog.ui
+    newsession.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
