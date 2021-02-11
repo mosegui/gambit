@@ -77,7 +77,7 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
     */
 
     int res;
-    this->newissue = new viewNewIssue(this);
+    this->newissue = new ViewNewIssue(this);
     res = newissue->exec();
 
     if (res == QDialog::Rejected)
@@ -157,7 +157,7 @@ void ViewMainWindow::on_actionOpen_Session_triggered()
     */
 
     int res;
-    viewExistingSessions existingSessions(this, this->dbManager);
+    ViewExistingSessions existingSessions(this, this->dbManager);
     existingSessions.setWindowTitle("Existing Sessions");
     res = existingSessions.exec();
 

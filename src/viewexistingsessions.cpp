@@ -5,7 +5,7 @@
 #include <QDebug>
 #include <QSqlQuery>
 
-viewExistingSessions::viewExistingSessions(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::ExistingSessions)
+ViewExistingSessions::ViewExistingSessions(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::ExistingSessions)
 {
     /* Retrieves all the existing DB names from the MySQL server and
      * casts the DB names from a vector to a QStringList object. It then
@@ -26,23 +26,23 @@ viewExistingSessions::viewExistingSessions(QWidget *parent, ControllerDB *dbMana
     ui->listView->setModel(model);
 }
 
-viewExistingSessions::~viewExistingSessions()
+ViewExistingSessions::~ViewExistingSessions()
 {
     delete ui;
 }
 
-void viewExistingSessions::on_buttonBox_accepted()
+void ViewExistingSessions::on_buttonBox_accepted()
 {
     selectedSession = ui->listView->currentIndex().data().toString();
     accept();
 }
 
-void viewExistingSessions::on_buttonBox_rejected()
+void ViewExistingSessions::on_buttonBox_rejected()
 {
     rejected();
 }
 
-void viewExistingSessions::on_pushButton_clicked()
+void ViewExistingSessions::on_pushButton_clicked()
 {
     QString toDelete = ui->listView->currentIndex().data().toString();
 

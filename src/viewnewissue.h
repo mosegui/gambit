@@ -3,16 +3,16 @@
 #include <QDialog>
 
 namespace Ui {
-class newIssue;
+class NewIssue;
 }
 
-class viewNewIssue : public QDialog
+class ViewNewIssue : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit viewNewIssue(QWidget *parent = nullptr);
-    ~viewNewIssue();
+    explicit ViewNewIssue(QWidget *parent = nullptr);
+    ~ViewNewIssue();
 
     QString get_newIsssueID();
     QString get_newIsssueTitle();
@@ -23,7 +23,7 @@ private slots:
     void on_buttonBox_accepted();
 
 private:
-    Ui::newIssue *ui;
+    Ui::NewIssue *ui;
 
 };
 

@@ -9,13 +9,13 @@ namespace Ui {
 class ExistingSessions;
 }
 
-class viewExistingSessions : public QDialog
+class ViewExistingSessions : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit viewExistingSessions(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
-    ~viewExistingSessions();
+    explicit ViewExistingSessions(QWidget *parent = nullptr, ControllerDB *dbManager = nullptr);
+    ~ViewExistingSessions();
 
     QStringListModel* model;
     QStringList list;
