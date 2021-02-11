@@ -1,5 +1,5 @@
 #include "viewmainwindow.h"
-#include "newissue.h"
+#include "viewnewissue.h"
 #include "existingsessionsdialog.h"
 #include "viewnewsession.h"
 
@@ -77,7 +77,7 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
     */
 
     int res;
-    this->newissue = new newIssue(this);
+    this->newissue = new viewNewIssue(this);
     res = newissue->exec();
 
     if (res == QDialog::Rejected)

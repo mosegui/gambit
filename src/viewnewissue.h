@@ -6,13 +6,13 @@ namespace Ui {
 class newIssue;
 }
 
-class newIssue : public QDialog
+class viewNewIssue : public QDialog
 {
     Q_OBJECT
 
 public:
-    explicit newIssue(QWidget *parent = nullptr);
-    ~newIssue();
+    explicit viewNewIssue(QWidget *parent = nullptr);
+    ~viewNewIssue();
 
     QString get_newIsssueID();
     QString get_newIsssueTitle();

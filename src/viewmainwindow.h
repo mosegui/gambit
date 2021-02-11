@@ -4,7 +4,7 @@
 #include <QtSql/QSqlTableModel>
 #include <QtSql/QSqlDatabase>
 #include "controllerdb.h"
-#include "newissue.h"
+#include "viewnewissue.h"
 #include "ui_mainwindow.h"
 
 QT_BEGIN_NAMESPACE
@@ -19,7 +19,7 @@ class ViewMainWindow : public QMainWindow
 
     public:
         ControllerDB* dbManager;
-        newIssue* newissue;
+        viewNewIssue* newissue;
 
         ViewMainWindow(QWidget *parent = nullptr);
         ~ViewMainWindow();

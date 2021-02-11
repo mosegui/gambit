@@ -19,15 +19,15 @@ SOURCES += \
     controllerdb.cpp \
     existingsessionsdialog.cpp \
     main.cpp \
-    newissue.cpp \
     viewmainwindow.cpp \
+    viewnewissue.cpp \
     viewnewsession.cpp
 
 HEADERS += \
     controllerdb.h \
     existingsessionsdialog.h \
-    newissue.h \
     viewmainwindow.h \
+    viewnewissue.h \
     viewnewsession.h
 
 FORMS += \
