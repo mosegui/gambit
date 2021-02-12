@@ -1,8 +1,9 @@
 #include "controllerdialogs.h"
 
-ControllerDialogs::ControllerDialogs()
+ControllerDialogs::~ControllerDialogs()
 {
-
+    delete newissue;
+    delete newsession;
 }
 
 int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
@@ -24,4 +25,20 @@ QString ControllerDialogs::getNewIssueTitle() {
 
     QString issueTitle = this->newissue->get_newIsssueTitle();
     return issueTitle;
+}
+
+
+int ControllerDialogs::openNewSession(QWidget *caller_widget) {
+
+    this->newsession = new ViewNewSession(caller_widget);
+    newsession->setWindowTitle("New Session");
+    int res = newsession->exec();
+
+    return res;
+}
+
+QString ControllerDialogs::getNewSessionName() {
+
+    QString sessionName = newsession->sessionName;
+    return sessionName;
 }

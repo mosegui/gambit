@@ -1,7 +1,7 @@
 #include "viewnewsession.h"
 #include "ui_newsession.h"
 
-ViewNewSession::ViewNewSession(QWidget *parent, ControllerDB *dbManager) : QDialog(parent), ui(new Ui::NewSession)
+ViewNewSession::ViewNewSession(QWidget *parent) : QDialog(parent), ui(new Ui::NewSession)
 {
     ui->setupUi(this);
 }

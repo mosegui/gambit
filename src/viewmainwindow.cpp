@@ -1,11 +1,10 @@
-#include "viewmainwindow.h"
-#include "viewexistingsessions.h"
-#include "viewnewsession.h"
-#include "controllerdialogs.h"
-
 #include <iostream>
 #include <QMessageBox>
 #include <QSqlRecord>
+
+#include "viewmainwindow.h"
+
+#include "viewexistingsessions.h"
 
 #include <QDebug>
 
@@ -18,13 +17,14 @@ ViewMainWindow::ViewMainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui
 
     ui->setupUi(this);
     this->dbManager = new ControllerDB("localhost", "admin", 3306, "main_connection");
+    this->dialogsManager = new ControllerDialogs();
 }
 
 
 ViewMainWindow::~ViewMainWindow()
 {
     delete this->dbManager;
-    delete this->newissue;
+    delete this->dialogsManager;
     delete ui;
 }
 
@@ -76,8 +76,6 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
      * the contents table.
     */
 
-
-    this->dialogsManager = new ControllerDialogs();
     int res = dialogsManager->openNewIssue(this);
 
     if (res == QDialog::Rejected)
@@ -177,15 +175,13 @@ void ViewMainWindow::on_actionNew_Session_triggered()
      * DB/Schema.
     */
 
-    int res;
-    ViewNewSession newSession(this, this->dbManager);
-    newSession.setWindowTitle("New Session");
-    res = newSession.exec();
+    int res = dialogsManager->openNewSession(this);
 
     if (res == QDialog::Rejected)
     {
         return;
     }
-    QString sessionName = newSession.sessionName;
+
+    QString sessionName = dialogsManager->getNewSessionName();
     this->dbManager->createNewDB(sessionName);
 }
