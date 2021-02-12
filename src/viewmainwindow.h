@@ -3,6 +3,7 @@
 #include <QMainWindow>
 #include <QtSql/QSqlTableModel>
 #include <QtSql/QSqlDatabase>
+
 #include "ui_mainwindow.h"
 #include "controllerdialogs.h"
 #include "controllerdb.h"

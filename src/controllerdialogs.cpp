@@ -4,6 +4,7 @@ ControllerDialogs::~ControllerDialogs()
 {
     delete newissue;
     delete newsession;
+    delete existingsessions;
 }
 
 int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
@@ -13,7 +14,6 @@ int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
 
     return res;
 }
-
 
 QString ControllerDialogs::getNewIssueID() {
 
@@ -26,7 +26,6 @@ QString ControllerDialogs::getNewIssueTitle() {
     QString issueTitle = this->newissue->get_newIsssueTitle();
     return issueTitle;
 }
-
 
 int ControllerDialogs::openNewSession(QWidget *caller_widget) {
 
@@ -41,4 +40,19 @@ QString ControllerDialogs::getNewSessionName() {
 
     QString sessionName = newsession->sessionName;
     return sessionName;
+}
+
+int ControllerDialogs::openExistingSessions(QWidget *caller_widget, ControllerDB *dbManager) {
+
+    this->existingsessions = new ViewExistingSessions(caller_widget, dbManager);
+    existingsessions->setWindowTitle("Existing Sessions");
+    int res = existingsessions->exec();
+
+    return res;
+}
+
+QString ControllerDialogs::getSelectedSessionName() {
+
+    QString selectedSession = existingsessions->selectedSession;
+    return selectedSession;
 }

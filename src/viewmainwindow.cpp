@@ -4,7 +4,7 @@
 
 #include "viewmainwindow.h"
 
-#include "viewexistingsessions.h"
+//#include "viewexistingsessions.h"
 
 #include <QDebug>
 
@@ -154,16 +154,20 @@ void ViewMainWindow::on_actionOpen_Session_triggered()
      * the "overview" table and fill the tableItem object.
     */
 
+    int res = dialogsManager->openExistingSessions(this, this->dbManager);
+
+    /*
     int res;
     ViewExistingSessions existingSessions(this, this->dbManager);
     existingSessions.setWindowTitle("Existing Sessions");
     res = existingSessions.exec();
+    */
 
     if (res == QDialog::Rejected)
     {
         return;
     }
-    QString session = existingSessions.selectedSession;
+    QString session = dialogsManager->getSelectedSessionName();
     this->dbManager->connectToDb(session);
     this->setUp_tableModel_from_connectedDB();
 }
