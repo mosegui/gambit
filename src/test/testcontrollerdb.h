@@ -3,7 +3,7 @@
 #include "controllerdb.h"
 
 
-class TestDBManager: public QObject
+class TestControllerDB: public QObject
 {
     Q_OBJECT
 
@@ -11,7 +11,7 @@ public:
     QString testDbNanme = "test_db";
 
     ControllerDB* dbManager;
-    ~TestDBManager();
+    ~TestControllerDB();
 
 private slots:
     void initTestCase();

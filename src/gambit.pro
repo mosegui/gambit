@@ -19,6 +19,7 @@ SOURCES += \
     controllerdb.cpp \
     controllerdialogs.cpp \
     main.cpp \
+    test/testcontrollerdb.cpp \
     viewexistingsessions.cpp \
     viewmainwindow.cpp \
     viewnewissue.cpp \
@@ -27,6 +28,7 @@ SOURCES += \
 HEADERS += \
     controllerdb.h \
     controllerdialogs.h \
+    test/testcontrollerdb.h \
     viewexistingsessions.h \
     viewmainwindow.h \
     viewnewissue.h \
@@ -50,12 +52,10 @@ test {
     TARGET = qttest-example-test
     SOURCES -= main.cpp
 
-    HEADERS += \
-        test/testdbmanager.h
+    HEADERS +=
 
     SOURCES += \
-        test/test_main.cpp \
-        test/testdbmanager.cpp
+        test/test_main.cpp
 
 } else {
     message(Normal build)
