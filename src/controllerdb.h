@@ -29,6 +29,7 @@ class ControllerDB
         void closeConnection();
         void createNewDB(QString dbName);
         void deleteDB(QString dbName);
+        void refreshModelView();
 
     private:
         QString get_query_result(QString query);

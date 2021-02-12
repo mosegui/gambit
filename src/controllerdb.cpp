@@ -82,6 +82,13 @@ void ControllerDB::closeConnection()
     this->mDatabase.close();
 }
 
+
+void ControllerDB::refreshModelView()
+{
+    this->mModel->select();
+}
+
+
 void ControllerDB::createNewDB(QString dbName)
 {
     /* Creates a new Schema/database with all the tables and keys

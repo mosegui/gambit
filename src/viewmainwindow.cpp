@@ -4,8 +4,6 @@
 
 #include "viewmainwindow.h"
 
-//#include "viewexistingsessions.h"
-
 #include <QDebug>
 
 
@@ -80,7 +78,7 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
 
     if (res == QDialog::Rejected)
     {
-        this->dbManager->mModel->select();  // refreshes table model
+        this->dbManager->refreshModelView();
         return;
     }
 
@@ -88,7 +86,7 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
     QString newIssueTitle = dialogsManager->getNewIssueTitle();
 
     this->dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
-    this->dbManager->mModel->select();
+    this->dbManager->refreshModelView();
 }
 
 void ViewMainWindow::on_buttonRemoveIssue_clicked()
@@ -100,7 +98,7 @@ void ViewMainWindow::on_buttonRemoveIssue_clicked()
     std::string currentItemID = currentItem.value("id").toString().toStdString();
 
     this->dbManager->removeIssue(currentItemID);
-    this->dbManager->mModel->select();
+    this->dbManager->refreshModelView();
 }
 
 
@@ -112,7 +110,7 @@ void ViewMainWindow::on_lineEdit_editingFinished()
 
     QString title = ui->lineEdit->text();
     this->dbManager->updateIssueTitle(id.toStdString(), title.toStdString());
-    this->dbManager->mModel->select();
+    this->dbManager->refreshModelView();
 }
 
 void ViewMainWindow::on_textEdit_textChanged()
@@ -127,7 +125,8 @@ void ViewMainWindow::on_textEdit_textChanged()
 
     QString description = ui->textEdit->toPlainText();
     this->dbManager->updateIssueDescription(id.toStdString(), description.toStdString());
-    this->dbManager->mModel->select();
+
+    this->dbManager->refreshModelView();
 }
 
 
