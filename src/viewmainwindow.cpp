@@ -156,17 +156,11 @@ void ViewMainWindow::on_actionOpen_Session_triggered()
 
     int res = dialogsManager->openExistingSessions(this, this->dbManager);
 
-    /*
-    int res;
-    ViewExistingSessions existingSessions(this, this->dbManager);
-    existingSessions.setWindowTitle("Existing Sessions");
-    res = existingSessions.exec();
-    */
-
     if (res == QDialog::Rejected)
     {
         return;
     }
+
     QString session = dialogsManager->getSelectedSessionName();
     this->dbManager->connectToDb(session);
     this->setUp_tableModel_from_connectedDB();
