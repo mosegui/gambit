@@ -3,9 +3,10 @@
 #include <QMainWindow>
 #include <QtSql/QSqlTableModel>
 #include <QtSql/QSqlDatabase>
-#include "controllerdb.h"
-#include "viewnewissue.h"
 #include "ui_mainwindow.h"
+#include "controllerdialogs.h"
+#include "controllerdb.h"
+
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
@@ -15,10 +16,9 @@ class ViewMainWindow : public QMainWindow
 {
     Q_OBJECT
 
-    friend class TestMainWindow;
-
     public:
         ControllerDB* dbManager;
+        ControllerDialogs* dialogsManager;
         ViewNewIssue* newissue;
 
         ViewMainWindow(QWidget *parent = nullptr);

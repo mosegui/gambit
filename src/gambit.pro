@@ -17,6 +17,7 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     controllerdb.cpp \
+    controllerdialogs.cpp \
     main.cpp \
     viewexistingsessions.cpp \
     viewmainwindow.cpp \
@@ -25,6 +26,7 @@ SOURCES += \
 
 HEADERS += \
     controllerdb.h \
+    controllerdialogs.h \
     viewexistingsessions.h \
     viewmainwindow.h \
     viewnewissue.h \

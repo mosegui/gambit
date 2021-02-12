@@ -1,7 +1,7 @@
 #include "viewmainwindow.h"
-#include "viewnewissue.h"
 #include "viewexistingsessions.h"
 #include "viewnewsession.h"
+#include "controllerdialogs.h"
 
 #include <iostream>
 #include <QMessageBox>
@@ -76,9 +76,9 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
      * the contents table.
     */
 
-    int res;
-    this->newissue = new ViewNewIssue(this);
-    res = newissue->exec();
+
+    this->dialogsManager = new ControllerDialogs();
+    int res = dialogsManager->openNewIssue(this);
 
     if (res == QDialog::Rejected)
     {
@@ -86,8 +86,8 @@ void ViewMainWindow::on_buttonNewIssue_clicked()
         return;
     }
 
-    QString newIssueID = newissue->get_newIsssueID();
-    QString newIssueTitle = newissue->get_newIsssueTitle();
+    QString newIssueID = dialogsManager->getNewIssueID();
+    QString newIssueTitle = dialogsManager->getNewIssueTitle();
 
     this->dbManager->createIssue(newIssueID.toStdString(), newIssueTitle.toStdString());
     this->dbManager->mModel->select();
