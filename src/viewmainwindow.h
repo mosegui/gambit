@@ -20,7 +20,6 @@ class ViewMainWindow : public QMainWindow
     public:
         ControllerDB* dbManager;
         ControllerDialogs* dialogsManager;
-        ViewNewIssue* newissue;
 
         ViewMainWindow(QWidget *parent = nullptr);
         ~ViewMainWindow();

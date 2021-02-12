@@ -1,5 +1,5 @@
 #include "viewnewsession.h"
-#include "ui_newsession.h"
+//#include "ui_newsession.h"
 
 ViewNewSession::ViewNewSession(QWidget *parent) : QDialog(parent), ui(new Ui::NewSession)
 {

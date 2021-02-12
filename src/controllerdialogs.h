@@ -4,6 +4,10 @@
 #include "viewnewsession.h"
 #include "viewexistingsessions.h"
 
+
+
+#include <QtDebug>
+
 class ControllerDialogs
 {
     public:

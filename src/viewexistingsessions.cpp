@@ -1,5 +1,4 @@
 #include "viewexistingsessions.h"
-#include "ui_existingsessionsdialog.h"
 #include "controllerdb.h"
 
 #include <QDebug>

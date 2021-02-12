@@ -1,5 +1,4 @@
 #include "viewnewissue.h"
-#include "ui_newissue.h"
 
 ViewNewIssue::ViewNewIssue(QWidget *parent) : QDialog(parent), ui(new Ui::NewIssue)
 {

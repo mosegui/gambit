@@ -2,6 +2,8 @@
 
 #include <QDialog>
 
+#include "ui_newissue.h"
+
 namespace Ui {
 class NewIssue;
 }

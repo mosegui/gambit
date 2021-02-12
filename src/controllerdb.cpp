@@ -5,8 +5,6 @@
 #include <QSqlQuery>
 #include <QSqlDatabase>
 
-#include <QDebug>
-
 /*
    The DB required for a Gambit session must have the following structure:
 

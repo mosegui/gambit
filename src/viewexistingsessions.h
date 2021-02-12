@@ -5,6 +5,8 @@
 #include <QStringList>
 #include <QStringListModel>
 
+#include "ui_existingsessions.h"
+
 namespace Ui {
 class ExistingSessions;
 }
