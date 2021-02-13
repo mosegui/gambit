@@ -15,8 +15,6 @@ class ControllerDB
 
         QSqlTableModel* getTableModel(std::string);
 
-        QString mainConnectionName;
-
         void updateIssueTitle(std::string issueID, std::string issueTitle);
         void updateIssueDescription(std::string issueID, std::string issueDescription);
         void createIssue(std::string issueID, std::string issueTitle);

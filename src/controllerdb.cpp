@@ -28,7 +28,6 @@ ControllerDB::ControllerDB(std::string hostName, std::string userName, int port,
 {
     /* Connects to the MySQL server
     */
-    mainConnectionName = connectionName;
 
     this->mDatabase = QSqlDatabase::addDatabase("QMYSQL", connectionName);
     this->mDatabase.setHostName(QString::fromStdString(hostName));
