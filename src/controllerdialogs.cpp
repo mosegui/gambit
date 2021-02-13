@@ -2,7 +2,7 @@
 
 ControllerDialogs::~ControllerDialogs()
 {
-    //delete newissue;
+    // delete this->newissue;  // I do not understand why deleting this yields SegFault. I created it in the heap with "new"
     delete newsession;
     delete existingsessions;
 }
@@ -20,7 +20,7 @@ void ControllerDialogs::openNewIssueNoExecution(QWidget *caller_widget) {
 int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
 
     ControllerDialogs::openNewIssueNoExecution(caller_widget);
-    int res = newissue->exec();
+    int res = this->newissue->exec();
 
     return res;
 }
