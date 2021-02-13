@@ -20,7 +20,6 @@ void ControllerDialogs::openNewIssueNoExecution(QWidget *caller_widget) {
 int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
 
     ControllerDialogs::openNewIssueNoExecution(caller_widget);
-    //this->newissue = new ViewNewIssue(caller_widget);
     int res = newissue->exec();
 
     return res;

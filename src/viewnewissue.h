@@ -12,25 +12,23 @@ class ViewNewIssue : public QDialog
 {
     Q_OBJECT
 
-public:
-    explicit ViewNewIssue(QWidget *parent = nullptr);
-    ~ViewNewIssue();
+    public:
+        explicit ViewNewIssue(QWidget *parent = nullptr);
+        ~ViewNewIssue();
 
-    QString get_newIsssueID();
-    QString get_newIsssueTitle();
+        QString get_newIsssueID();
+        QString get_newIsssueTitle();
 
-    // testing mehtods
-    void set_newIssueID(QString);
-    void set_newIssueTitle(QString);
-    void clickAcceptButton();
+        // testing methods
+        void set_newIssueID(QString);
+        void set_newIssueTitle(QString);
+        void clickAcceptButton();
 
-private slots:
-    void on_buttonBox_rejected();
+    private slots:
+        void on_buttonBox_rejected();
+        void on_buttonBox_accepted();
 
-    void on_buttonBox_accepted();
-
-private:
-    Ui::NewIssue *ui;
-
+    private:
+        Ui::NewIssue *ui;
 };
 
