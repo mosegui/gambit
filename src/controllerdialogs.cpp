@@ -7,9 +7,20 @@ ControllerDialogs::~ControllerDialogs()
     delete existingsessions;
 }
 
-int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
+void ControllerDialogs::openNewIssueNoExecution(QWidget *caller_widget) {
+
+    /* Useful standalone for testing functionality of Controller class.
+     * Allows using Dialog private attributes but does not execute the
+     * dialog object.
+     */
 
     this->newissue = new ViewNewIssue(caller_widget);
+}
+
+int ControllerDialogs::openNewIssue(QWidget *caller_widget) {
+
+    ControllerDialogs::openNewIssueNoExecution(caller_widget);
+    //this->newissue = new ViewNewIssue(caller_widget);
     int res = newissue->exec();
 
     return res;
@@ -23,7 +34,7 @@ QString ControllerDialogs::getNewIssueID() {
 
 QString ControllerDialogs::getNewIssueTitle() {
 
-    QString issueTitle = this->newissue->get_newIsssueTitle();
+    QString issueTitle = this->newissue->get_newIsssueTitle();    
     return issueTitle;
 }
 

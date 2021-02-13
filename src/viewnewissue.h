@@ -19,6 +19,11 @@ public:
     QString get_newIsssueID();
     QString get_newIsssueTitle();
 
+    // testing mehtods
+    void set_newIssueID(QString);
+    void set_newIssueTitle(QString);
+    void clickAcceptButton();
+
 private slots:
     void on_buttonBox_rejected();
 

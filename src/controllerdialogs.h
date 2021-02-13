@@ -27,5 +27,8 @@ class ControllerDialogs
 
         int openExistingSessions(QWidget *caller_widget = nullptr, ControllerDB *dbManager = nullptr);
         QString getSelectedSessionName();
+
+        // for testing purposes
+        void openNewIssueNoExecution(QWidget *caller_widget = nullptr);
 };
 

@@ -1,9 +1,25 @@
 #pragma once
 
+#include <QtTest/QtTest>
 
-class TestControllerDialogs
+#include "viewmainwindow.h"
+#include "controllerdialogs.h"
+
+
+class TestControllerDialogs: public QObject
 {
-public:
-    TestControllerDialogs();
+    Q_OBJECT
+
+    public:
+         ~TestControllerDialogs();
+
+        ViewMainWindow* mainwindow;
+        ControllerDialogs* dialogsManager;
+
+    private slots:
+        void initTestCase();
+        //void cleanupTestCase();
+
+        void testOpenNewIssue();
 };
 
