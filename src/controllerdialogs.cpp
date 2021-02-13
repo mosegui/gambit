@@ -2,7 +2,7 @@
 
 ControllerDialogs::~ControllerDialogs()
 {
-    delete newissue;
+    //delete newissue;
     delete newsession;
     delete existingsessions;
 }
