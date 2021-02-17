@@ -20,5 +20,6 @@ class TestControllerDialogs: public QObject
         void initTestCase();
 
         void testOpenNewIssue();
+        void testOpenNewSession();
 };
 

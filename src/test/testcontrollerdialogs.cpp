@@ -36,3 +36,21 @@ void TestControllerDialogs::testOpenNewIssue()
 
 
 }
+
+void TestControllerDialogs::testOpenNewSession()
+{
+    this->dialogsManager = new ControllerDialogs();
+
+    this->dialogsManager->openNewSessionNoExecution(this->mainwindow);
+
+    QString expectedSessionName = "test_session_schema";
+
+    this->dialogsManager->newsession->set_newSessionName(expectedSessionName);
+
+    this->dialogsManager->newsession->clickAcceptButton();
+
+    QString newSessionName = this->dialogsManager->newsession->get_newSessionName();
+
+    QVERIFY(newSessionName == expectedSessionName);
+
+}

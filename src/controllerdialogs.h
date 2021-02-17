@@ -30,5 +30,6 @@ class ControllerDialogs
 
         // for testing purposes
         void openNewIssueNoExecution(QWidget *caller_widget = nullptr);
+        void openNewSessionNoExecution(QWidget *caller_widget = nullptr);
 };
 

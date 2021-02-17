@@ -43,11 +43,21 @@ QString ControllerDialogs::getNewIssueTitle() {
 
 // ############## NEW SESSION METHODS ##############
 
-int ControllerDialogs::openNewSession(QWidget *caller_widget) {
+void ControllerDialogs::openNewSessionNoExecution(QWidget *caller_widget) {
+
+    /* Useful standalone for testing functionality of Controller class.
+     * Allows using Dialog private attributes but does not execute the
+     * dialog object.
+     */
 
     this->newsession = new ViewNewSession(caller_widget);
-    newsession->setWindowTitle("New Session");
-    int res = newsession->exec();
+    this->newsession->setWindowTitle("New Session");
+}
+
+int ControllerDialogs::openNewSession(QWidget *caller_widget) {
+
+    ControllerDialogs::openNewSessionNoExecution(caller_widget);
+    int res = this->newsession->exec();
 
     return res;
 }

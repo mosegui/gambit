@@ -19,6 +19,12 @@ public:
     ~ViewNewSession();
     QString sessionName;
 
+    QString get_newSessionName();
+
+    // testing methods
+    void set_newSessionName(QString);
+    void clickAcceptButton();
+
 private slots:
     void on_buttonBox_rejected();
     void on_buttonBox_accepted();

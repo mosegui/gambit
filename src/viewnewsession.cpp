@@ -18,6 +18,33 @@ void ViewNewSession::on_buttonBox_rejected()
 
 void ViewNewSession::on_buttonBox_accepted()
 {
-    sessionName = ui->lineEdit->text();
+    sessionName = this->get_newSessionName();
     accept();
+}
+
+QString ViewNewSession::get_newSessionName()
+{
+    QString sessionName = ui->lineEdit->text();
+    return sessionName;
+}
+
+
+void ViewNewSession::set_newSessionName(QString name)
+{
+    /* Method used for testing purposes only. Modifies the content
+    of widgets hidden behind the pImpl idiom used by QtCreator for
+    implementing visual elements
+    */
+
+    ui->lineEdit->setText(name);
+}
+
+void ViewNewSession::clickAcceptButton()
+{
+    /* Method used for testing purposes only. Modifies the content
+    of widgets hidden behind the pImpl idiom used by QtCreator for
+    implementing visual elements
+    */
+
+    ui->buttonBox->accepted();
 }
