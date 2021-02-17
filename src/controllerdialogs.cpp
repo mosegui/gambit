@@ -7,6 +7,9 @@ ControllerDialogs::~ControllerDialogs()
     delete existingsessions;
 }
 
+
+// ############## NEW ISSUE METHODS ##############
+
 void ControllerDialogs::openNewIssueNoExecution(QWidget *caller_widget) {
 
     /* Useful standalone for testing functionality of Controller class.
@@ -37,6 +40,9 @@ QString ControllerDialogs::getNewIssueTitle() {
     return issueTitle;
 }
 
+
+// ############## NEW SESSION METHODS ##############
+
 int ControllerDialogs::openNewSession(QWidget *caller_widget) {
 
     this->newsession = new ViewNewSession(caller_widget);
@@ -51,6 +57,9 @@ QString ControllerDialogs::getNewSessionName() {
     QString sessionName = newsession->sessionName;
     return sessionName;
 }
+
+
+// ############## EXISITNG SESSIONS METHODS ##############
 
 int ControllerDialogs::openExistingSessions(QWidget *caller_widget, ControllerDB *dbManager) {
 
