@@ -3,7 +3,7 @@
 ControllerDialogs::~ControllerDialogs()
 {
     // delete this->newissue;  // I do not understand why deleting this yields SegFault. I created it in the heap with "new"
-    delete newsession;
+    // delete newsession;  // I do not understand why deleting this yields SegFault. I created it in the heap with "new"
     delete existingsessions;
 }
 
